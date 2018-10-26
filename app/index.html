@@ -6,7 +6,7 @@
     
     <!-- Use components defined in separate files. -->
     <script src="arrow-key-rotation.js"></script>
-    <script src="toggle-play-on-window-click.js"></script>
+    <script src="play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
 
@@ -14,7 +14,7 @@
     <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
       <a-videosphere rotation="0 180 0" src="#video" 
-                     toggle-play-on-window-click
+                     play-on-window-click
                      play-on-vrdisplayactivate-or-enter-vr>
       </a-videosphere>
       
@@ -25,7 +25,7 @@
                 width:3;
                 wrapCount:100;
                 color:red;
-                value:Click window to make the video play"
+                value:Click window to make the video play, if needed."
                 hide-once-playing="#video">
         </a-entity>
       </a-camera>      
@@ -37,10 +37,14 @@
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
           <source type="video/mp4"
-               src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+               src="video-1539855288.mp4" />
         </video>
       </a-assets>
     </a-scene>
-  
+    
+    <!-- Show a button to switch to the multi-source example that shows detail. -->
+    <button onClick="window.location.href='multi-source-detail.html'" style="position:absolute;top:10px;right:10px;">
+      Switch to multi-source detail example
+    </button>
   </body>
 </html>
