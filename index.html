@@ -49,10 +49,13 @@
       
       <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>
         <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>
-        <a-entity geometry="primitive:circle;radius:0.3" material="side:double;opacity:0.5" position='0 0 0.4' id="bigCircle"></a-entity>
-        <a-entity geometry="primitive:circle;radius:0.01" material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">
-          <a-animation attribute="radius" begin="mouseenter" dur="1500" to="0.3"></a-animation>
-        </a-entity>
+        <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">
+        <!--</a-entity>-->
+        <!--<a-circle radius='0.001' material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">-->
+          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001" fill="backwards" repeat="1"></a-animation>
+          <!--<a-animation attribute="radius" begin="mouseleave" to="0.3"></a-animation>-->
+          
+        </a-circle>
         <a-entity
           id='textMessage'
           visible='false'
@@ -64,8 +67,7 @@
           text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
       </a-entity>
 
-            <!-- Wait for the vsum dolor sit amet, consectetur adipisicing elit. Fugit cupiditate quaerat quibusdam perspiciatis similique laudantium, harum delectus nemo, veniam vitae facere alias. Est nisi reprehenderit et dolores eum, quos dolorem."></a-entity>
-ideo to load. -->
+            <!-- Wait for the video to load. -->
       <a-assets>
         <!-- Single source video. -->
         <video id="video" style="display:none" 
@@ -78,7 +80,7 @@ ideo to load. -->
     </a-scene>
   
     <script type="text/javascript">
-      console.log('script loaded')
+      console.log('script loaded');
         // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
         
         // var background = document.querySelector('#background');
@@ -92,7 +94,7 @@ ideo to load. -->
           cursorOnObject=true;
           
           setTimeout(function() {
-            console.log('gazed for a second')
+            // console.log('gazed for a second')
             if(cursorOnObject){
               document.querySelector('#textMessage').setAttribute('visible', 'true');
               
