@@ -49,6 +49,10 @@
       
       <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>
         <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>
+        <a-entity geometry="primitive:circle;radius:0.3" material="side:double;opacity:0.5" position='0 0 0.4' id="bigCircle"></a-entity>
+        <a-entity geometry="primitive:circle;radius:0.01" material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">
+          <a-animation attribute="radius" begin="mouseenter" dur="1500" to="0.3"></a-animation>
+        </a-entity>
         <a-entity
           id='textMessage'
           visible='false'
@@ -60,8 +64,8 @@
           text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
       </a-entity>
 
-      
-      <!-- Wait for the video to load. -->
+            <!-- Wait for the vsum dolor sit amet, consectetur adipisicing elit. Fugit cupiditate quaerat quibusdam perspiciatis similique laudantium, harum delectus nemo, veniam vitae facere alias. Est nisi reprehenderit et dolores eum, quos dolorem."></a-entity>
+ideo to load. -->
       <a-assets>
         <!-- Single source video. -->
         <video id="video" style="display:none" 
@@ -86,10 +90,12 @@
         pin.addEventListener('mouseenter', function(){
           pin.setAttribute('scale', {x:2, y:2, z:2});
           cursorOnObject=true;
+          
           setTimeout(function() {
             console.log('gazed for a second')
             if(cursorOnObject){
               document.querySelector('#textMessage').setAttribute('visible', 'true');
+              
             }
           }, 1500);
         });
