@@ -9,11 +9,13 @@
     <script src="toggle-play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
+    <!--<script src="push-annimation.js"></script>-->
+    
 
     <!-- Specify our scene. -->
     <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-      <a-videosphere rotation="0 180 0" src="#video" 
+      <a-videosphere id='background' rotation="0 180 0" src="#video" 
                      toggle-play-on-window-click
                      play-on-vrdisplayactivate-or-enter-vr>
       </a-videosphere>
@@ -25,15 +27,39 @@
                 width:3;
                 wrapCount:100;
                 color:red;
-                value:Click window to make the video play"
+                value:Click to make the video play"
                 hide-once-playing="#video">
         </a-entity>
+        <a-cursor scale="0.5 0.5" color="#fff"></a-cursor>
       </a-camera>    
       
-      <a-box color="gray" position="0 -1 -1.5" rotation="45 0 0" height="0.2" width="2">
-        <a-box position="-0.43880848764222424 0.1660736569070969 -0.013576717400473351" height="0.2" color="green" material="" geometry="depth:0.7;width:0.7"></a-box>
-        <a-box position="0.45223135684908344 0.1660736569070969 -0.013576717400473351" height="0.2" color="red" material="" geometry="depth:0.7;width:0.7"></a-box>
-      </a-box>
+      <!--<a-box color="gray" position="0 -1 -1.5" rotation="45 0 0" height="0.2" width="2">-->
+      <!--  <a-box position="-0.43880848764222424 0.1660736569070969 -0.013576717400473351" height="0.2" color="green" material="" geometry="depth:0.7;width:0.7" >-->
+      <!--    <a-animation attribute="color" begin="click" to="white" dur="100"></a-animation>-->
+      <!--    <a-animation attribute="color" begin="click" to="green" dur="80" delay="120"></a-animation>-->
+          
+      <!--  </a-box>-->
+      <!--  <a-box position="0.45223135684908344 0.1660736569070969 -0.013576717400473351" height="0.2" color="red" material="" geometry="depth:0.7;width:0.7">-->
+      <!--    <a-animation attribute="color" begin="click" to="white" dur="100"></a-animation>-->
+      <!--    <a-animation attribute="color" begin="click" to="red" dur="80" delay="120"></a-animation>-->
+      <!--  </a-box>-->
+      <!--</a-box>-->
+      
+      
+      
+      <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>
+        <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>
+        <a-entity
+          id='textMessage'
+          visible='false'
+          position='0 -1 0'
+          geometry="primitive: plane; width: auto; height: auto"
+          material="color: blue"
+          rotation='0 0 180'
+          scale='2 2 2'
+          text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
+      </a-entity>
+
       
       <!-- Wait for the video to load. -->
       <a-assets>
@@ -47,5 +73,33 @@
       </a-assets>
     </a-scene>
   
+    <script type="text/javascript">
+      console.log('script loaded')
+        // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
+        
+        // var background = document.querySelector('#background');
+        // console.log(background);
+        // background.setAttribute('src', videoSource);
+        
+        const pin = document.querySelector('#pin');
+        let cursorOnObject=false;
+        pin.addEventListener('mouseenter', function(){
+          pin.setAttribute('scale', {x:2, y:2, z:2});
+          cursorOnObject=true;
+          setTimeout(function() {
+            console.log('gazed for a second')
+            if(cursorOnObject){
+              document.querySelector('#textMessage').setAttribute('visible', 'true');
+            }
+          }, 1500);
+        });
+        
+        pin.addEventListener('mouseleave', function(){
+          pin.setAttribute('scale', {x:1, y:1, z:1});
+          cursorOnObject=false;
+          document.querySelector('#textMessage').setAttribute('visible', 'false');
+        });
+        
+    </script>
   </body>
 </html>
