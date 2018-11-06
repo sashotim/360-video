@@ -9,15 +9,18 @@
     <script src="toggle-play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
+    
     <!--<script src="push-annimation.js"></script>-->
     
 
     <!-- Specify our scene. -->
     <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-      <a-videosphere id='background' rotation="0 180 0" src="#video" 
-                     toggle-play-on-window-click
-                     play-on-vrdisplayactivate-or-enter-vr>
+      <a-videosphere  rotation="0 180 0" src="#video" 
+                      
+                      toggle-play-on-window-click
+                      play-on-vrdisplayactivate-or-enter-vr>
+        <!--id='background'-->
       </a-videosphere>
       
       <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
@@ -52,7 +55,7 @@
         <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">
         <!--</a-entity>-->
         <!--<a-circle radius='0.001' material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">-->
-          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001" fill="backwards" repeat="1"></a-animation>
+          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001"></a-animation>
           <!--<a-animation attribute="radius" begin="mouseleave" to="0.3"></a-animation>-->
           
         </a-circle>
@@ -73,12 +76,12 @@
         <video id="video" style="display:none" 
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
-          <source type="video/mp4"
-               src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+          <source type="video/mp4" id="background"
+               src="" />
         </video>
       </a-assets>
     </a-scene>
-  
+    <script src="/address-of-video.js"></script>
     <script type="text/javascript">
       console.log('script loaded');
         // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
@@ -96,8 +99,7 @@
           setTimeout(function() {
             // console.log('gazed for a second')
             if(cursorOnObject){
-              document.querySelector('#textMessage').setAttribute('visible', 'true');
-              
+              document.querySelector('#textMessage').setAttribute('visible', 'true'); 
             }
           }, 1500);
         });

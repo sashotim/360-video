@@ -17,6 +17,7 @@ AFRAME.registerComponent('hide-once-playing', {
     }
   },
   onPlaying: function (evt) {
+    console.log(this.el);
     this.el.setAttribute('visible', false);
   },
   onPause: function (evt) {
