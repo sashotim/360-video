@@ -7,6 +7,7 @@
     <!-- Use components defined in separate files. -->
     <script src="arrow-key-rotation.js"></script>
     <script src="play-on-window-click.js"></script>
+    <script src="toggle-play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
 
@@ -14,7 +15,7 @@
     <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
       <a-videosphere rotation="0 180 0" src="#video" 
-                     play-on-window-click
+                     toggle-play-on-window-click
                      play-on-vrdisplayactivate-or-enter-vr>
       </a-videosphere>
       
@@ -37,7 +38,7 @@
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
           <source type="video/mp4"
-               src="video-1539855288.mp4" />
+               src="../videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
         </video>
       </a-assets>
     </a-scene>
