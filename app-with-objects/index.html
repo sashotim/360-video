@@ -72,7 +72,12 @@
           scale='2 2 2'
           text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
       </a-entity>
+      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>
 
+
+
+
+      
             <!-- Wait for the video to load. -->
       <a-assets>
         <!-- Single source video. -->
@@ -80,11 +85,17 @@
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
           <source type="video/mp4" id="background"
-               src="" />
+               src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+        </video> 
+        <video id="flat-video" style="display:none" 
+               autoplay="true" loop>
+          <!-- MP4 video source. -->
+          <source type="video/mp4" id="flat-video"
+               src="/videos/SampleVideo_1280x720_1mb.mp4" />
         </video>
       </a-assets>
     </a-scene>
-    <script src="/address-of-video.js"></script>
+    <script src="address-of-video.js"></script>
     <script type="text/javascript">
       console.log('script loaded');
         // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
@@ -112,6 +123,18 @@
           cursorOnObject=false;
           document.querySelector('#textMessage').setAttribute('visible', 'false');
         });
+        
+        var videoEl = document.querySelector('#flat-video');
+        var planeForVideo = document.querySelector('#plane-for-video');
+        // videoEl.currentTime = 122;  // Seek to 122 seconds.
+        
+        planeForVideo.addEventListener('mouseenter', function(){
+          videoEl.play();
+        });
+        planeForVideo.addEventListener('mouseleave', function(){
+          videoEl.pause();
+        });
+        
         
         
     </script>
