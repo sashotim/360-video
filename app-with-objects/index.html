@@ -1,41 +1,41 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--  <body>-->
+<!DOCTYPE html>
+<html>
+  <body>
     <!-- As if this Glitch were a typical HTML CodePen... -->    
-<!--    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>-->
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     
     <!-- Use components defined in separate files. -->
-<!--    <script src="arrow-key-rotation.js"></script>-->
-<!--    <script src="toggle-play-on-window-click.js"></script>-->
-<!--    <script src="play-on-window-click.js"></script>-->
-<!--    <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>-->
-<!--    <script src="hide-once-playing.js"></script>-->
+    <script src="arrow-key-rotation.js"></script>
+    <script src="toggle-play-on-window-click.js"></script>
+    <script src="play-on-window-click.js"></script>
+    <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
+    <script src="hide-once-playing.js"></script>
     
     <!--<script src="push-annimation.js"></script>-->
     
 
     <!-- Specify our scene. -->
-<!--    <a-scene>-->
+    <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-<!--      <a-videosphere  rotation="0 180 0" src="#video" id="videosphere"-->
-<!--                      toggle-play-on-window-click-->
-<!--                      play-on-vrdisplayactivate-or-enter-vr-->
-<!--                      >-->
+      <a-videosphere  rotation="0 180 0" src="#video" id="videosphere"
+                      toggle-play-on-window-click
+                      play-on-vrdisplayactivate-or-enter-vr
+                      >
         <!--id='background'-->
-<!--      </a-videosphere>-->
+      </a-videosphere>
       
       <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
-<!--      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation>-->
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation>
         <!-- Text element for display messaging.  Hide once video is playing. -->
-<!--        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; -->
-<!--                width:3;-->
-<!--                wrapCount:100;-->
-<!--                color:red;-->
-<!--                value:Click to make the video play"-->
-<!--                hide-once-playing="#video">-->
-<!--        </a-entity>-->
-<!--        <a-cursor scale="0.5 0.5" color="#fff"></a-cursor>-->
-<!--      </a-camera>    -->
+        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
+                width:3;
+                wrapCount:100;
+                color:red;
+                value:Click to make the video play"
+                hide-once-playing="#video">
+        </a-entity>
+        <a-cursor scale="0.5 0.5" color="#fff"></a-cursor>
+      </a-camera>    
       
       <!--<a-box color="gray" position="0 -1 -1.5" rotation="45 0 0" height="0.2" width="2">-->
       <!--  <a-box position="-0.43880848764222424 0.1660736569070969 -0.013576717400473351" height="0.2" color="green" material="" geometry="depth:0.7;width:0.7" >-->
@@ -51,104 +51,89 @@
       
       
       
-<!--      <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>-->
-<!--        <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>-->
-<!--        <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">-->
+      <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>
+        <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>
+        <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">
         <!--</a-entity>-->
         <!--<a-circle radius='0.001' material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">-->
-<!--          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001"></a-animation>-->
+          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001"></a-animation>
           <!--<a-animation begin="click" easing="ease-in" attribute="scale" dur="150"-->
           <!--     fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>-->
           <!--<a-animation attribute="radius" begin="mouseleave" to="0.3"></a-animation>-->
           
-<!--        </a-circle>-->
-<!--        <a-entity-->
-<!--          id='textMessage'-->
-<!--          visible='false'-->
-<!--          position='0 -1 0'-->
-<!--          geometry="primitive: plane; width: auto; height: auto"-->
-<!--          material="color: blue"-->
-<!--          rotation='0 0 180'-->
-<!--          scale='2 2 2'-->
-<!--          text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>-->
-<!--      </a-entity>-->
-<!--      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>-->
+        </a-circle>
+        <a-entity
+          id='textMessage'
+          visible='false'
+          position='0 -1 0'
+          geometry="primitive: plane; width: auto; height: auto"
+          material="color: blue"
+          rotation='0 0 180'
+          scale='2 2 2'
+          text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
+      </a-entity>
+      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>
 
 
 
 
       
             <!-- Wait for the video to load. -->
-<!--      <a-assets>-->
-        <!-- Single source video. -->
-<!--        <video id="video" style="display:none" -->
-<!--               autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>-->
-          <!-- MP4 video source. -->
-<!--          <source type="video/mp4" id="background"-->
-<!--               src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />-->
-<!--        </video> -->
-<!--        <video id="flat-video" style="display:none" -->
-<!--               autoplay="true" loop>-->
-          <!-- MP4 video source. -->
-<!--          <source type="video/mp4" id="flat-video"-->
-<!--               src="/videos/SampleVideo_1280x720_1mb.mp4" />-->
-<!--        </video>-->
-<!--      </a-assets>-->
-<!--    </a-scene>-->
-    <!--<script src="address-of-video.js"></script>-->
-
-<!--  </body>-->
-<!--</html>-->
-
-
-<!DOCTYPE html>
-<html>
-  <body>
-    <!-- As if this Glitch were a typical HTML CodePen... -->    
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-    
-    <!-- Use components defined in separate files. -->
-    <script src="arrow-key-rotation.js"></script>
-    <script src="play-on-window-click.js"></script>
-    <script src="toggle-play-on-window-click.js"></script>
-    <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
-    <script src="hide-once-playing.js"></script>
-
-    <!-- Specify our scene. -->
-    <a-scene>
-      <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-      <a-videosphere rotation="0 180 0" src="#video" 
-                     toggle-play-on-window-click
-                     play-on-vrdisplayactivate-or-enter-vr>
-      </a-videosphere>
-      
-      <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
-      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation>
-        <!-- Text element for display messaging.  Hide once video is playing. -->
-        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
-                width:3;
-                wrapCount:100;
-                color:red;
-                value:Click window to make the video play, if needed."
-                hide-once-playing="#video">
-        </a-entity>
-      </a-camera>      
-      
-      <!-- Wait for the video to load. -->
       <a-assets>
         <!-- Single source video. -->
         <video id="video" style="display:none" 
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
-          <source type="video/mp4"
-               src="../videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+          <source type="video/mp4" id="background"
+               src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+        </video> 
+        <video id="flat-video" style="display:none" >
+          <!-- MP4 video source. -->
+          <source type="video/mp4" id="flat-video"
+               src="/videos/SampleVideo_1280x720_1mb.mp4" />
         </video>
       </a-assets>
     </a-scene>
-    
-    <!-- Show a button to switch to the multi-source example that shows detail. -->
-    <!--<button onClick="window.location.href='multi-source-detail.html'" style="position:absolute;top:10px;right:10px;">-->
-    <!--  Switch to multi-source detail example-->
-    <!--</button>-->
+    <!--<script src="address-of-video.js"></script>-->
+    <script type="text/javascript">
+      console.log('script loaded');
+        // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
+        
+        // var background = document.querySelector('#background');
+        // console.log(background);
+        // background.setAttribute('src', videoSource);
+        
+        const pin = document.querySelector('#pin');
+        let cursorOnObject=false;
+        pin.addEventListener('mouseenter', function(){
+          pin.setAttribute('scale', {x:2, y:2, z:2});
+          cursorOnObject=true;
+          
+          setTimeout(function() {
+            // console.log('gazed for a second')
+            if(cursorOnObject){
+              document.querySelector('#textMessage').setAttribute('visible', 'true'); 
+            }
+          }, 1500);
+        });
+        
+        pin.addEventListener('mouseleave', function(){
+          pin.setAttribute('scale', {x:1, y:1, z:1});
+          cursorOnObject=false;
+          document.querySelector('#textMessage').setAttribute('visible', 'false');
+        });
+        
+        var videoEl = document.querySelector('#flat-video');
+        var planeForVideo = document.querySelector('#plane-for-video');
+        // videoEl.currentTime = 122;  // Seek to 122 seconds.
+        
+        planeForVideo.addEventListener('mouseenter', function(){
+          videoEl.play();
+        });
+        planeForVideo.addEventListener('mouseleave', function(){
+          videoEl.pause();
+        });
+        
+    </script>
   </body>
 </html>
