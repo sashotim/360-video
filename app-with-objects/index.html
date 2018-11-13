@@ -44,17 +44,16 @@
             id="cursor"></a-entity>
       </a-camera>    
       
-      <!--<a-box color="gray" position="0 -1 -1.5" rotation="45 0 0" height="0.2" width="2">-->
-      <!--  <a-box position="-0.43880848764222424 0.1660736569070969 -0.013576717400473351" height="0.2" color="green" material="" geometry="depth:0.7;width:0.7" >-->
-      <!--    <a-animation attribute="color" begin="click" to="white" dur="100"></a-animation>-->
-      <!--    <a-animation attribute="color" begin="click" to="green" dur="80" delay="120"></a-animation>-->
-          
-      <!--  </a-box>-->
-      <!--  <a-box position="0.45223135684908344 0.1660736569070969 -0.013576717400473351" height="0.2" color="red" material="" geometry="depth:0.7;width:0.7">-->
-      <!--    <a-animation attribute="color" begin="click" to="white" dur="100"></a-animation>-->
-      <!--    <a-animation attribute="color" begin="click" to="red" dur="80" delay="120"></a-animation>-->
-      <!--  </a-box>-->
-      <!--</a-box>-->
+      <a-box color="gray" position="2.5 -1 -3.5" rotation="45 -30 0" height="0.2" width="1">
+        <a-box position="0.008 0.032 -0.021" height="0.2" geometry="depth:0.7;width:0.7" material="src: #playImg;" id='controlsTile'>
+          <!--<a-animation attribute="color" begin="click" to="white" dur="100" fill="both" repeat="1"></a-animation>-->
+          <!--<a-animation attribute="color" begin="click" to="green" dur="80" delay="120" ></a-animation>-->
+        </a-box>
+        <!--<a-box position="0.45223135684908344 0.1660736569070969 -0.013576717400473351" height="0.2" color="red" material="" geometry="depth:0.7;width:0.7">-->
+        <!--  <a-animation attribute="color" begin="click" to="white" dur="100"></a-animation>-->
+        <!--  <a-animation attribute="color" begin="click" to="red" dur="80" delay="120"></a-animation>-->
+        <!--</a-box>-->
+      </a-box>
       
       
       
@@ -89,7 +88,7 @@
       <a-assets>
         <!-- Single source video. -->
         <video id="video" style="display:none" 
-               autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
+                loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
           <source type="video/mp4" id="video"
                src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
@@ -99,6 +98,8 @@
           <source type="video/mp4" id="flat-video"
                src="/videos/SampleVideo_1280x720_1mb.mp4" />
         </video>
+        <img src="/videos/if_music_pause_stop_control_play_blue_1872770.png" id="pauseImg">
+        <img src="/videos/if_music_play_pause_control_go_arrow_blue_1872769.png" id="playImg">
       </a-assets>
     </a-scene>
     <!--<script src="address-of-video.js"></script>-->
@@ -141,11 +142,22 @@
           videoEl.pause();
         });
         
+        var controlsTile = document.querySelector('#controlsTile');
         var videoBackground = document.querySelector('#video');
-        window.addEventListener('click', function() {
-          console.log('background was clicked');
-            videoBackground.paused ? videoBackground.play() : videoBackground.pause();
+        
+        controlsTile.addEventListener('click', function() {
+            if(videoBackground.paused){
+              videoBackground.play();
+              controlsTile.setAttribute('material', 'src: #pauseImg');
+            } else if(!videoBackground.paused){
+              videoBackground.pause();
+              controlsTile.setAttribute('material', 'src: #playImg');
+            }
         })
+        
+        // window.addEventListener('click', function() {
+        //     videoBackground.paused ? videoBackground.play() : videoBackground.pause();
+        // });
         
     </script>
   </body>
