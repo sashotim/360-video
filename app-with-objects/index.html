@@ -6,7 +6,7 @@
     
     <!-- Use components defined in separate files. -->
     <script src="arrow-key-rotation.js"></script>
-    <script src="toggle-play-on-window-click.js"></script>
+    <!--<script src="toggle-play-on-window-click.js"></script>-->
     <script src="play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
@@ -18,7 +18,6 @@
     <a-scene>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
       <a-videosphere  rotation="0 180 0" src="#video" id="videosphere"
-                      toggle-play-on-window-click
                       play-on-vrdisplayactivate-or-enter-vr
                       >
         <!--id='background'-->
@@ -41,7 +40,8 @@
             cursor="fuse: true;"
             material="color: white; shader: flat"
             position="0 0 -3"
-            geometry="primitive: ring;radiusInner: 0.02; radiusOuter: 0.04;"></a-entity>
+            geometry="primitive: ring;radiusInner: 0.02; radiusOuter: 0.04;"
+            id="cursor"></a-entity>
       </a-camera>    
       
       <!--<a-box color="gray" position="0 -1 -1.5" rotation="45 0 0" height="0.2" width="2">-->
@@ -91,7 +91,7 @@
         <video id="video" style="display:none" 
                autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
           <!-- MP4 video source. -->
-          <source type="video/mp4" id="background"
+          <source type="video/mp4" id="video"
                src="/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
         </video> 
         <video id="flat-video" style="display:none">
@@ -140,6 +140,12 @@
         planeForVideo.addEventListener('mouseleave', function(){
           videoEl.pause();
         });
+        
+        var videoBackground = document.querySelector('#video');
+        window.addEventListener('click', function() {
+          console.log('background was clicked');
+            videoBackground.paused ? videoBackground.play() : videoBackground.pause();
+        })
         
     </script>
   </body>
