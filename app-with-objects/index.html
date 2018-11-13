@@ -51,28 +51,22 @@
       
       
       
-      <a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>
-        <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>
-        <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">
-        <!--</a-entity>-->
-        <!--<a-circle radius='0.001' material="side:double;opacity:1" position='0 0 0.5' id="smallCircle">-->
-          <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001"></a-animation>
-          <a-animation begin="click" easing="ease-in" attribute="scale" dur="150"
-               fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
-          <!--<a-animation attribute="radius" begin="mouseleave" to="0.3"></a-animation>-->
-          
-        </a-circle>
-        <a-entity
-          id='textMessage'
-          visible='false'
-          position='0 -1 0'
-          geometry="primitive: plane; width: auto; height: auto"
-          material="color: blue"
-          rotation='0 0 180'
-          scale='2 2 2'
-          text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>
-      </a-entity>
-      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>
+      <!--<a-entity geometry="primitive:cone;radiusTop:0.0001;radiusBottom:0.3;height:0.5" rotation="0 0 180" id="pin" position='0, 3, -9' material='color: green'>-->
+      <!--  <a-entity geometry="primitive:sphere;radius:0.3" position='0 -0.35 0' material='color: green'></a-entity>-->
+      <!--  <a-circle radius='0.3' material="side:double;opacity:0.5" color='white' position='0 0 0.4' id="bigCircle">-->
+      <!--    <a-animation attribute="radius" begin="mouseenter" dur="1500" from='0.3' to="0.001"></a-animation>-->
+      <!--  </a-circle>-->
+      <!--  <a-entity-->
+      <!--    id='textMessage'-->
+      <!--    visible='false'-->
+      <!--    position='0 -1 0'-->
+      <!--    geometry="primitive: plane; width: auto; height: auto"-->
+      <!--    material="color: blue"-->
+      <!--    rotation='0 0 180'-->
+      <!--    scale='2 2 2'-->
+      <!--    text="value: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam quos nemo cupiditate itaque iste porro. Sunt repudiandae quia ab asperiores consequatur accusamus cupiditate, facilis debitis officia culpa nesciunt, unde ut."></a-entity>-->
+      <!--</a-entity>-->
+      <!--<a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>-->
 
 
 
@@ -96,47 +90,40 @@
       </a-assets>
     </a-scene>
     <!--<script src="address-of-video.js"></script>-->
-    <script type="text/javascript">
-      console.log('script loaded');
-        // const videoSource = '/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4';
+    <!-- <script type="text/javascript">
+    //   console.log('script loaded');
         
-        // var background = document.querySelector('#background');
-        // console.log(background);
-        // background.setAttribute('src', videoSource);
-        
-        const pin = document.querySelector('#pin');
-        let cursorOnObject=false;
-        pin.addEventListener('mouseenter', function(){
-          pin.setAttribute('scale', {x:2, y:2, z:2});
-          cursorOnObject=true;
+    //     const pin = document.querySelector('#pin');
+    //     let cursorOnObject=false;
+    //     pin.addEventListener('mouseenter', function(){
+    //       pin.setAttribute('scale', {x:2, y:2, z:2});
+    //       cursorOnObject=true;
           
-          setTimeout(function() {
-            // console.log('gazed for a second')
-            if(cursorOnObject){
-              document.querySelector('#textMessage').setAttribute('visible', 'true'); 
-            }
-          }, 1500);
-        });
+    //       setTimeout(function() {
+    //         if(cursorOnObject){
+    //           document.querySelector('#textMessage').setAttribute('visible', 'true'); 
+    //         }
+    //       }, 1500);
+    //     });
         
-        pin.addEventListener('mouseleave', function(){
-          pin.setAttribute('scale', {x:1, y:1, z:1});
-          cursorOnObject=false;
-          document.querySelector('#textMessage').setAttribute('visible', 'false');
-        });
+    //     pin.addEventListener('mouseleave', function(){
+    //       pin.setAttribute('scale', {x:1, y:1, z:1});
+    //       cursorOnObject=false;
+    //       document.querySelector('#textMessage').setAttribute('visible', 'false');
+    //     });
         
-        var videoEl = document.querySelector('#flat-video');
-        var planeForVideo = document.querySelector('#plane-for-video');
-        // videoEl.currentTime = 122;  // Seek to 122 seconds.
+    //     var videoEl = document.querySelector('#flat-video');
+    //     var planeForVideo = document.querySelector('#plane-for-video');
         
-        planeForVideo.addEventListener('mouseenter', function(){
-          videoEl.play();
-        });
-        planeForVideo.addEventListener('mouseleave', function(){
-          videoEl.pause();
-        });
+    //     planeForVideo.addEventListener('mouseenter', function(){
+    //       videoEl.play();
+    //     });
+    //     planeForVideo.addEventListener('mouseleave', function(){
+    //       videoEl.pause();
+    //     });
         
         
         
-    </script>
+    </script> -->
   </body>
 </html>
