@@ -37,6 +37,11 @@ AFRAME.registerComponent('pin', {
        this.mesh = new THREE.Mesh(this.geometry, this.material);
        
        el.setObject3D('mesh', this.mesh);
+       
+       el.addEventListener('click', function(){
+           console.log('pin was clicked');
+           el.setAttribute('material', 'color: red');
+       })
    }
     
 });
