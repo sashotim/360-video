@@ -80,7 +80,7 @@
       <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>
 
 
-      <a-entity pin position='0 0 -3'></a-entity>
+      <a-entity pin position='0 0 -30'></a-entity>
 
 
 
@@ -141,6 +141,9 @@
         });
         planeForVideo.addEventListener('mouseleave', function(){
           videoEl.pause();
+        });
+        planeForVideo.addEventListener('click', function(){
+          console.log(videoEl.currentTime);
         });
         
         var controlsTile = document.querySelector('#controlsTile');

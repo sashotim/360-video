@@ -21,7 +21,7 @@ AFRAME.registerComponent('pin', {
        var sphereMesh = new THREE.Mesh(sphere);
        var coneMesh = new THREE.Mesh(cone);
        coneMesh.rotation.z = Math.PI;
-       coneMesh.translateY( 1.5 );
+       coneMesh.translateY( data.height/2 );
        
        
        sphereMesh.updateMatrix();
@@ -37,8 +37,6 @@ AFRAME.registerComponent('pin', {
        this.mesh = new THREE.Mesh(this.geometry, this.material);
        
        el.setObject3D('mesh', this.mesh);
-       
-       
    }
     
 });
