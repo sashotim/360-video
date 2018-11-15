@@ -10,6 +10,7 @@
     <script src="play-on-window-click.js"></script>
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
     <script src="hide-once-playing.js"></script>
+    <script type="text/javascript" src="pin-object.js"></script>
     
     <!--<script src="push-annimation.js"></script>-->
     
@@ -35,8 +36,6 @@
         </a-entity>
         <!--<a-cursor scale="0.5 0.5" color="#fff"></a-cursor>-->
         <a-entity
-            animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
-            animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
             cursor="fuse: true;"
             material="color: white; shader: flat"
             position="0 0 -3"
@@ -80,6 +79,8 @@
       </a-entity>
       <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="17 4 1" rotation="0 -90 0" scale="16 9 1" id="plane-for-video"></a-entity>
 
+
+      <a-entity pin position='0 0 -3'></a-entity>
 
 
 
@@ -149,11 +150,13 @@
             if(videoBackground.paused){
               videoBackground.play();
               controlsTile.setAttribute('material', 'src: #pauseImg');
+              console.log(document.querySelector('#controlsTile'));
             } else if(!videoBackground.paused){
               videoBackground.pause();
               controlsTile.setAttribute('material', 'src: #playImg');
+              console.log(document.querySelector('#controlsTile'));
             }
-        })
+        });
         
         // window.addEventListener('click', function() {
         //     videoBackground.paused ? videoBackground.play() : videoBackground.pause();
