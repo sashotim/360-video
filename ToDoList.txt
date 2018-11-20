@@ -1,0 +1,52 @@
+TODO:
+
+*************do today**************
+
+- [DONE] Timestamps in video (resurch)
+- jump to anothre video than back (make a function that does this)
+    +++++++SUBTASKS++++++++
+    -attribute is the new vide src
+    -store old timestamp and src into a variable
+    -load new video and perhaps play some effect to make it seem like loadtimes are fast
+    
+- dialog windows (prefferebly as a component)
+
+*************big stuff ***********
+
+- make a scene where at a surtain timestamp
+an object appears, upon gazing at it it 
+offers some options like a dialog in a game
+gazing upon an option triggers the video 
+to be changed and then when another event is
+triggered the video has to go to the previous
+timepoint it was in
+
+    +++++++++++SUBTASKS++++++++++++++
+    -choose a 360 video
+    -choose event for play/pause
+    -choose a timestamp at which object is shown
+    -choose an object to interact with
+    -design and implement it (prefferebly as component)
+    -choose event to trigger actions
+    -write dialog options
+    -make event to trigger when an oprion is chosen
+    -save timestamp of old video
+    -make the videos switch upon choosing the right event
+    -play until a surtain point or implement onother object
+    -return to old video at saved timestamp
+
+
+
+***************CAN WAIT OR ARE OLD******************
+-[DONE] make the pin appear
+- make the events trigger (mouseenter,
+mouseleave, maybe gaze/fuze)
+- try out component with different inputs
+
+
+
+-think of a better way to play/pause
+or fix the mobile click with cursor
+- maybe make controls pannel into a
+component too
+

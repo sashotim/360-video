@@ -1,1 +1,1 @@
-<?php header( 'Location: /app-with-objects/index.html' ) ;  ?> 
+<?php header( 'Location: /switchingScenes/index.html' ) ;  ?> 
