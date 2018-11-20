@@ -94,6 +94,7 @@
       var videoSwitched = false;
       var timeWhenVideo1WasPaused;
       
+      
       video.addEventListener('timeupdate', function(){
         if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
           video.pause();
