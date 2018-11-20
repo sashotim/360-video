@@ -101,8 +101,10 @@
         }
         
         if (videoSwitched && video.currentTime >= 4) {
+          videoSwitched = false;
           video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
           video.currentTime = timeWhenVideo1WasPaused;
+          console.log(video.currentTime);
         }
       });
       
@@ -112,6 +114,7 @@
       
       answer1.addEventListener('click', function(){
         video.pause();
+        console.log(video.currentTime);
         timeWhenVideo1WasPaused = video.currentTime;
         videoSwitched=true;
         video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
@@ -123,7 +126,7 @@
          if (bubble.getAttribute('visible')) {
            noIsClicked = true;
            document.querySelector('#scene').removeChild(bubble);
-           video.play();
+          video.play();
          }
       });
       
