@@ -72,6 +72,12 @@
             material="color: black; shader: flat"
             position="0 0 -3"
             geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09"></a-entity>
+            <a-entity
+            id='countdown'
+            visible='false'
+            position='0 -1.5 -3'
+            text="value: 4; color: white; lineHeight: 80; wrapCount: 5; align: center">
+        </a-entity>
         </a-camera>      
       </a-entity>
       <!-- Wait for the video to load. -->
@@ -90,6 +96,7 @@
       var question = document.querySelector('#question');
       var answer1 = document.querySelector('#answer1');
       var answer2 = document.querySelector('#answer2');
+      var countdown = document.querySelector('#countdown');
       var noIsClicked = false;
       var videoSwitched = false;
       var timeWhenVideo1WasPaused;
@@ -102,9 +109,14 @@
         
         if (videoSwitched && video.currentTime >= 4) {
           videoSwitched = false;
+          countdown.setAttribute('visible', 'false');
           video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
           video.currentTime = timeWhenVideo1WasPaused;
           console.log(video.currentTime);
+        }
+        if (videoSwitched && video.currentTime < 4) {
+          var timer = 'value: ' + (4 - Math.floor(video.currentTime)).toString();
+          countdown.setAttribute('text', timer);
         }
       });
       
@@ -119,6 +131,7 @@
         videoSwitched=true;
         video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
         document.querySelector('#scene').removeChild(bubble);
+        countdown.setAttribute('visible', 'true');
         // video.play();
       });
       
