@@ -14,7 +14,7 @@
     <script src="hide-once-playing.js"></script>
 
     <!-- Specify our scene. -->
-    <a-scene>
+    <a-scene id='scene'>
       <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
       <a-videosphere rotation="0 180 0" src="#video" 
                      toggle-play-on-window-click
@@ -94,7 +94,6 @@
       var videoSwitched = false;
       var timeWhenVideo1WasPaused;
       
-      
       video.addEventListener('timeupdate', function(){
         if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
           video.pause();
@@ -116,14 +115,14 @@
         timeWhenVideo1WasPaused = video.currentTime;
         videoSwitched=true;
         video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
-        bubble.setAttribute('visible', 'false');
+        document.querySelector('#scene').removeChild(bubble);
         // video.play();
       });
       
       answer2.addEventListener('click', function() {
          if (bubble.getAttribute('visible')) {
            noIsClicked = true;
-           bubble.setAttribute('visible', 'false');
+           document.querySelector('#scene').removeChild(bubble);
            video.play();
          }
       });
