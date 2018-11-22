@@ -54,6 +54,8 @@
         </a-entity>
       </a-entity>
       
+      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="40 -6 -26" rotation="0 -60 0" scale="16 9 1" id="plane-for-video"></a-entity>
+      
       <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
       <a-entity id='cameraWrapper' rotation="0 -90 0">
         <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation rotation='0 -90 0'>
@@ -87,6 +89,11 @@
                crossorigin="anonymous" playsinline webkit-playsinline
                src="../videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4">
         </video>
+        <video id="flat-video" style="display:none" loop>
+          <!-- MP4 video source. -->
+          <source type="video/mp4" id="flat-video"
+               src="/videos/SampleVideo_1280x720_1mb.mp4" />
+        </video>
       </a-assets>
     </a-scene>
     
@@ -105,14 +112,53 @@
         if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
           video.pause();
           bubble.setAttribute('visible', 'true');
+          
+          bubble.addEventListener("click", function(){
+            question.setAttribute('visible', 'true');
+          });
+          
+          answer1.addEventListener('click', function(){
+            video.pause();
+            console.log(video.currentTime);
+            timeWhenVideo1WasPaused = video.currentTime;
+            videoSwitched=true;
+            video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
+            document.querySelector('#scene').removeChild(bubble);
+            var backButton = document.createElement("a-entity"); 
+            document.querySelector('#scene').appendChild(backButton);
+            backButton.setAttribute('id', "backButton");
+            backButton.setAttribute('material', "color: lightblue");
+            backButton.setAttribute('geometry', "primitive: plane; width: 0.5; height: auto");
+            backButton.setAttribute('position', "3 -1 0");
+            backButton.setAttribute('rotation', "-30 -90 0");
+            backButton.setAttribute('scale', "2 2 2");
+            backButton.setAttribute('text', "value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center");
+            backButton.addEventListener('click', backToFirstScene);
+      //       <a-entity
+      //       id='backButton'
+      //       position='3 -1 0'
+      //       rotation='-30 -90 0'
+      //       geometry="primitive: plane; width: 0.5; height: auto"
+      //       material="color: lightblue"
+      //       scale='2 2 2'
+      //       text="value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center">
+      // </a-entity>
+            countdown.setAttribute('visible', 'true');
+            // video.play();
+          });
+          
+          answer2.addEventListener('click', function() {
+             if (bubble.getAttribute('visible')) {
+               noIsClicked = true;
+               document.querySelector('#scene').removeChild(bubble);
+              video.play();
+             }
+          });
+          
         }
         
         if (videoSwitched && video.currentTime >= 4) {
-          videoSwitched = false;
-          countdown.setAttribute('visible', 'false');
-          video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
-          video.currentTime = timeWhenVideo1WasPaused;
-          console.log(video.currentTime);
+          backToFirstScene();
         }
         if (videoSwitched && video.currentTime < 4) {
           var timer = 'value: ' + (4 - Math.floor(video.currentTime)).toString();
@@ -120,29 +166,28 @@
         }
       });
       
-      bubble.addEventListener("click", function(){
-        question.setAttribute('visible', 'true');
-      });
-      
-      answer1.addEventListener('click', function(){
-        video.pause();
+      var videoEl = document.querySelector('#flat-video');
+        var planeForVideo = document.querySelector('#plane-for-video');
+        // videoEl.currentTime = 122;  // Seek to 122 seconds.
+        
+        planeForVideo.addEventListener('mouseenter', function(){
+          videoEl.play();
+        });
+        planeForVideo.addEventListener('mouseleave', function(){
+          videoEl.pause();
+        });
+        // planeForVideo.addEventListener('click', function(){
+        //   videoEl.currentTime = 3;
+        //   console.log(videoEl.currentTime);
+        // });
+      function backToFirstScene() {
+        videoSwitched = false;
+        countdown.setAttribute('visible', 'false');
+        video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
+        document.querySelector('#scene').removeChild(document.querySelector('#backButton'));
+        video.currentTime = timeWhenVideo1WasPaused;
         console.log(video.currentTime);
-        timeWhenVideo1WasPaused = video.currentTime;
-        videoSwitched=true;
-        video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
-        document.querySelector('#scene').removeChild(bubble);
-        countdown.setAttribute('visible', 'true');
-        // video.play();
-      });
-      
-      answer2.addEventListener('click', function() {
-         if (bubble.getAttribute('visible')) {
-           noIsClicked = true;
-           document.querySelector('#scene').removeChild(bubble);
-          video.play();
-         }
-      });
-      
+      }
     </script>
     
     <!-- Show a button to switch to the multi-source example that shows detail. -->
