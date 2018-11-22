@@ -1,198 +1,166 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <!-- As if this Glitch were a typical HTML CodePen... -->    
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-    <script src="anime-master/anime.min.js"></script>
-    <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
-    
-    <!-- Use components defined in separate files. -->
-    <script src="arrow-key-rotation.js"></script>
-    <script src="play-on-window-click.js"></script>
-    <script src="toggle-play-on-window-click.js"></script>
-    <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
-    <script src="hide-once-playing.js"></script>
 
-    <!-- Specify our scene. -->
-    <a-scene id='scene'>
-      <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-      <a-videosphere rotation="0 180 0" src="#video" 
-                     toggle-play-on-window-click
-                     play-on-vrdisplayactivate-or-enter-vr>
-      </a-videosphere>
-      
-      <a-entity geometry="primitive: sphere; radius: 0.5" scale="2 1 1" position= "7 2.5 2" material="color: gray" id="speechBubble" visible='false' rotation='0 -90 0'>
-        <a-entity
-            id='question'
-            visible='false'
-            position='0 -0.2 1'
-            geometry="primitive: plane; width: 0.7; height: auto"
-            material="color: gray"
-            scale='2 2 2'
-            text="value: Do you wish to travel to another location?; color: black; wrapCount: 17; lineHeight: 80">
-          <a-entity
-            id='answer1'
-            visible='true'
-            position='-0.2 -0.3 0'
-            geometry="primitive: plane; width: 0.16; height: auto"
-            material="color: lightgreen"
-            scale='2 2 2'
-            text="value: Sure!; color: black; lineHeight: 80; wrapCount: 5; align: center">
+<body>
+  <!-- As if this Glitch were a typical HTML CodePen... -->
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="anime-master/anime.min.js"></script>
+  <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+
+  <!-- Use components defined in separate files. -->
+  <script src="arrow-key-rotation.js"></script>
+  <script src="play-on-window-click.js"></script>
+  <script src="toggle-play-on-window-click.js"></script>
+  <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
+  <script src="hide-once-playing.js"></script>
+
+  <!-- Specify our scene. -->
+  <a-scene id='scene'>
+    <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
+    <a-videosphere rotation="0 180 0" src="#video" toggle-play-on-window-click play-on-vrdisplayactivate-or-enter-vr>
+    </a-videosphere>
+
+    <a-entity geometry="primitive: sphere; radius: 0.5" scale="2 1 1" position="7 2.5 2" material="color: gray" id="speechBubble" visible='false' rotation='0 -90 0' animation="property: visible; to: true; startEvents: materialtextureloaded">
+      <a-entity id='question' visible='false' position='0 -0.2 1' geometry="primitive: plane; width: 0.7; height: auto" material="color: gray" scale='2 2 2' text="value: Do you wish to travel to another location?; color: black; wrapCount: 17; lineHeight: 80">
+        <a-entity id='answer1' visible='true' position='-0.2 -0.3 0' geometry="primitive: plane; width: 0.16; height: auto" material="color: lightgreen" scale='2 2 2' text="value: Sure!; color: black; lineHeight: 80; wrapCount: 5; align: center">
         </a-entity>
-        <a-entity
-            id='answer2'
-            visible='true'
-            position='0.2 -0.3 0'
-            geometry="primitive: plane; width: 0.16; height: auto"
-            material="color: lightred"
-            scale='2 2 2'
-            text="value: Nope; color: black; lineHeight: 80; wrapCount: 5; align: center">
-        </a-entity>
-        </a-entity>
-        <a-entity geometry="primitive: sphere; radius: 0.2" position="-0.2 -0.7 0" scale="0.7 1 1" material="color: gray">
-          <a-entity geometry="primitive: sphere; radius: 0.08" position="-0.2 -0.4 0" scale="0.5 1 1" material="color: gray"></a-entity>
+        <a-entity id='answer2' visible='true' position='0.2 -0.3 0' geometry="primitive: plane; width: 0.16; height: auto" material="color: lightred" scale='2 2 2' text="value: Nope; color: black; lineHeight: 80; wrapCount: 5; align: center">
         </a-entity>
       </a-entity>
-      
-      <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="40 -6 -26" rotation="0 -60 0" scale="16 9 1" id="plane-for-video"></a-entity>
-      
-      <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
-      <a-entity id='cameraWrapper' rotation="0 -90 0">
-        <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation rotation='0 -90 0'>
-          <!-- Text element for display messaging.  Hide once video is playing. -->
-          <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
+      <a-entity geometry="primitive: sphere; radius: 0.2" position="-0.2 -0.7 0" scale="0.7 1 1" material="color: gray">
+        <a-entity geometry="primitive: sphere; radius: 0.08" position="-0.2 -0.4 0" scale="0.5 1 1" material="color: gray"></a-entity>
+      </a-entity>
+    </a-entity>
+
+    <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="40 -6 -26" rotation="0 -60 0" scale="16 9 1" id="plane-for-video"></a-entity>
+
+    <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
+    <a-entity id='cameraWrapper' rotation="0 -90 0">
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation rotation='0 -90 0'>
+        <!-- Text element for display messaging.  Hide once video is playing. -->
+        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
                   width:3;
                   wrapCount:100;
                   color:red;
-                  value:Click window to make the video play, if needed."
-                  hide-once-playing="#video">
-          </a-entity>
-          <a-entity
-            animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
-            animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
-            cursor="fuse: true;"
-            material="color: black; shader: flat"
-            position="0 0 -3"
-            geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09"></a-entity>
-            <a-entity
-            id='countdown'
-            visible='false'
-            position='0 -1.5 -3'
-            text="value: 4; color: white; lineHeight: 80; wrapCount: 5; align: center">
+                  value:Click window to make the video play, if needed." hide-once-playing="#video">
         </a-entity>
-        </a-camera>      
-      </a-entity>
-      <!-- Wait for the video to load. -->
-      <a-assets>
-        <!-- Single source video. -->
-        <video id="video" style="display:none" 
-               crossorigin="anonymous" playsinline webkit-playsinline
-               src="../videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4">
+        <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1" animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1" cursor="fuse: true;"
+          material="color: black; shader: flat" position="0 0 -3" geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09"></a-entity>
+        <a-entity id='countdown' visible='false' position='0 -1.5 -3' text="value: 4; color: white; lineHeight: 80; wrapCount: 5; align: center">
+        </a-entity>
+      </a-camera>
+    </a-entity>
+    <!-- Wait for the video to load. -->
+    <a-assets>
+      <!-- Single source video. -->
+      <video id="video" style="display:none" crossorigin="anonymous" playsinline webkit-playsinline src="../videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4">
         </video>
-        <video id="flat-video" style="display:none" loop>
+      <video id="flat-video" style="display:none" loop>
           <!-- MP4 video source. -->
           <source type="video/mp4" id="flat-video"
                src="/videos/SampleVideo_1280x720_1mb.mp4" />
         </video>
-      </a-assets>
-    </a-scene>
-    
-    <script>
-      var bubble = document.querySelector("#speechBubble");
-      var video = document.querySelector("#video");
-      var question = document.querySelector('#question');
-      var answer1 = document.querySelector('#answer1');
-      var answer2 = document.querySelector('#answer2');
-      var countdown = document.querySelector('#countdown');
-      var noIsClicked = false;
-      var videoSwitched = false;
-      var timeWhenVideo1WasPaused;
-      
-      video.addEventListener('timeupdate', function(){
-        if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
+    </a-assets>
+  </a-scene>
+
+  <script>
+    var bubble = document.querySelector("#speechBubble");
+    var video = document.querySelector("#video");
+    var question = document.querySelector('#question');
+    var answer1 = document.querySelector('#answer1');
+    var answer2 = document.querySelector('#answer2');
+    var countdown = document.querySelector('#countdown');
+    var noIsClicked = false;
+    var videoSwitched = false;
+    var timeWhenVideo1WasPaused;
+
+    video.addEventListener('timeupdate', function() {
+      if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
+        video.pause();
+        bubble.setAttribute('visible', 'true');
+
+        bubble.addEventListener("click", function() {
+          question.setAttribute('visible', 'true');
+        });
+
+        answer1.addEventListener('click', function() {
           video.pause();
-          bubble.setAttribute('visible', 'true');
-          
-          bubble.addEventListener("click", function(){
-            question.setAttribute('visible', 'true');
-          });
-          
-          answer1.addEventListener('click', function(){
-            video.pause();
-            console.log(video.currentTime);
-            timeWhenVideo1WasPaused = video.currentTime;
-            videoSwitched=true;
-            video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
+          console.log(video.currentTime);
+          timeWhenVideo1WasPaused = video.currentTime;
+          videoSwitched = true;
+          video.setAttribute('src', "/videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4");
+          document.querySelector('#scene').removeChild(bubble);
+          var backButton = document.createElement("a-entity");
+          document.querySelector('#scene').appendChild(backButton);
+          backButton.setAttribute('id', "backButton");
+          backButton.setAttribute('material', "color: lightblue");
+          backButton.setAttribute('geometry', "primitive: plane; width: 0.5; height: auto");
+          backButton.setAttribute('position', "3 -1 0");
+          backButton.setAttribute('rotation', "-30 -90 0");
+          backButton.setAttribute('scale', "2 2 2");
+          backButton.setAttribute('text', "value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center");
+          backButton.addEventListener('click', backToFirstScene);
+          //       <a-entity
+          //       id='backButton'
+          //       position='3 -1 0'
+          //       rotation='-30 -90 0'
+          //       geometry="primitive: plane; width: 0.5; height: auto"
+          //       material="color: lightblue"
+          //       scale='2 2 2'
+          //       text="value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center">
+          // </a-entity>
+          countdown.setAttribute('visible', 'true');
+          // video.play();
+        });
+
+        answer2.addEventListener('click', function() {
+          if (bubble.getAttribute('visible')) {
+            noIsClicked = true;
             document.querySelector('#scene').removeChild(bubble);
-            var backButton = document.createElement("a-entity"); 
-            document.querySelector('#scene').appendChild(backButton);
-            backButton.setAttribute('id', "backButton");
-            backButton.setAttribute('material', "color: lightblue");
-            backButton.setAttribute('geometry', "primitive: plane; width: 0.5; height: auto");
-            backButton.setAttribute('position', "3 -1 0");
-            backButton.setAttribute('rotation', "-30 -90 0");
-            backButton.setAttribute('scale', "2 2 2");
-            backButton.setAttribute('text', "value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center");
-            backButton.addEventListener('click', backToFirstScene);
-      //       <a-entity
-      //       id='backButton'
-      //       position='3 -1 0'
-      //       rotation='-30 -90 0'
-      //       geometry="primitive: plane; width: 0.5; height: auto"
-      //       material="color: lightblue"
-      //       scale='2 2 2'
-      //       text="value: Get me back there!; color: black; lineHeight: 80; wrapCount: 10; align: center">
-      // </a-entity>
-            countdown.setAttribute('visible', 'true');
-            // video.play();
-          });
-          
-          answer2.addEventListener('click', function() {
-             if (bubble.getAttribute('visible')) {
-               noIsClicked = true;
-               document.querySelector('#scene').removeChild(bubble);
-              video.play();
-             }
-          });
-          
-        }
-        
-        if (videoSwitched && video.currentTime >= 4) {
-          backToFirstScene();
-        }
-        if (videoSwitched && video.currentTime < 4) {
-          var timer = 'value: ' + (4 - Math.floor(video.currentTime)).toString();
-          countdown.setAttribute('text', timer);
-        }
-      });
-      
-      var videoEl = document.querySelector('#flat-video');
-        var planeForVideo = document.querySelector('#plane-for-video');
-        // videoEl.currentTime = 122;  // Seek to 122 seconds.
-        
-        planeForVideo.addEventListener('mouseenter', function(){
-          videoEl.play();
+            video.play();
+          }
         });
-        planeForVideo.addEventListener('mouseleave', function(){
-          videoEl.pause();
-        });
-        // planeForVideo.addEventListener('click', function(){
-        //   videoEl.currentTime = 3;
-        //   console.log(videoEl.currentTime);
-        // });
-      function backToFirstScene() {
-        videoSwitched = false;
-        countdown.setAttribute('visible', 'false');
-        video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
-        document.querySelector('#scene').removeChild(document.querySelector('#backButton'));
-        video.currentTime = timeWhenVideo1WasPaused;
-        console.log(video.currentTime);
+
       }
-    </script>
-    
-    <!-- Show a button to switch to the multi-source example that shows detail. -->
-    <!--<button onClick="window.location.href='multi-source-detail.html'" style="position:absolute;top:10px;right:10px;">-->
-    <!--  Switch to multi-source detail example-->
-    <!--</button>-->
-  </body>
+
+      if (videoSwitched && video.currentTime >= 10) {
+        backToFirstScene();
+      }
+      if (videoSwitched && video.currentTime < 10) {
+        var timer = 'value: ' + (10 - Math.floor(video.currentTime)).toString();
+        countdown.setAttribute('text', timer);
+      }
+    });
+
+    var videoEl = document.querySelector('#flat-video');
+    var planeForVideo = document.querySelector('#plane-for-video');
+    // videoEl.currentTime = 122;  // Seek to 122 seconds.
+
+    planeForVideo.addEventListener('mouseenter', function() {
+      videoEl.play();
+    });
+    planeForVideo.addEventListener('mouseleave', function() {
+      videoEl.pause();
+    });
+    // planeForVideo.addEventListener('click', function(){
+    //   videoEl.currentTime = 3;
+    //   console.log(videoEl.currentTime);
+    // });
+    function backToFirstScene() {
+      videoSwitched = false;
+      countdown.setAttribute('visible', 'false');
+      video.setAttribute('src', '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4');
+      document.querySelector('#scene').removeChild(document.querySelector('#backButton'));
+      video.currentTime = timeWhenVideo1WasPaused;
+      console.log(video.currentTime);
+    }
+  </script>
+
+  <!-- Show a button to switch to the multi-source example that shows detail. -->
+  <!--<button onClick="window.location.href='multi-source-detail.html'" style="position:absolute;top:10px;right:10px;">-->
+  <!--  Switch to multi-source detail example-->
+  <!--</button>-->
+</body>
+
 </html>
