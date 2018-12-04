@@ -39,16 +39,17 @@
     <a-scene antialias="true">
       <!-- Paths to left and right images -->
       <a-assets>
-        <img id="left" src="/3dvr/left.png">
-        <img id="right" src="/3dvr/right.png">
+        <!--<img id="left" src="/3dvr/left.png">-->
+        <!--<img id="right" src="/3dvr/right.png">-->
+        <img src="/videos/47150369_1889778254453661_7507566888826699776_n.jpg" id="image">
       </a-assets>
 
       <!-- Camera -->
       <a-entity camera look-controls position="0 0 0" stereocam="eye:left;"></a-entity>
 
       <!-- Sky sphere -->
-      <a-sky id="sky1" src="#left" stereo="eye:left"></a-sky>
-      <a-sky id="sky2" src="#right" stereo="eye:right"></a-sky>
+      <a-sky id="sky1" src="#image" stereo="eye:left; split: horizontal"></a-sky>
+      <a-sky id="sky2" src="#image" stereo="eye:right; split: horizontal"></a-sky>
 
       <-- or alternatively -->
 
