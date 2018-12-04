@@ -1,1 +1,1 @@
-<?php header( 'Location: /3dvr/index.html' ) ;  ?> 
+<?php header( 'Location: /3dvr/aframe-stereo-component-master/examples/basic_image/index.html' ) ;  ?> 
