@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- As if this Glitch were a typical HTML CodePen... -->    
+      <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="anime-master/anime.min.js"></script>
+  <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+
+  <!-- Use components defined in separate files. -->
+  <script src="arrow-key-rotation.js"></script>
+  <!--<script src="play-on-window-click.js"></script>-->
+  <!--<script src="toggle-play-on-window-click.js"></script>-->
+  <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
+  <script src="hide-once-playing.js"></script>
+  <!--<script src="get-real-position.js"></script>-->
+  <script src="reset-video-on-click.js"></script>
+  <script src="play-video-on-click.js"></script>
+  <script src="zoom-in-on-click.js"></script>
+  <script src="zoom-out-on-click.js"></script>
+  <script src="replay-on-click.js"></script>
+  <script src="scip-ahead-on-click.js"></script>
+  <script src="remove-controll-pallet.js"></script>
+
+    <!-- Specify our scene. -->
+    <a-scene>
+      <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
+      <a-videosphere rotation="0 180 0" src="#video" 
+                     
+                     play-on-vrdisplayactivate-or-enter-vr>
+      </a-videosphere>
+      
+      <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation id="camera">
+        <!-- Text element for display messaging.  Hide once video is playing. -->
+        <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
+                width:3;
+                wrapCount:100;
+                color:red;
+                value:Click window to make the video play, if needed."
+                hide-once-playing="#video">
+        </a-entity>
+        <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1" animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1" cursor="fuse: true;"
+          material="color: black; shader: flat" position="0 0 -3" geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09" id="cursor"></a-entity>
+      </a-camera>      
+      
+    <a-entity geometry='primitive: circle; radius: 0.2' position='0 -3.1 0' id="controlsCenter" rotation='-90 0 0' visible='false' remove-controll-pallet>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-forward-30-100.png' scip-ahead-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0 0.8 0' material='color: yellow; src: /videos/icons-media/icons8-play-filled-100.png' play-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-in.png' zoom-in-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-out.png' zoom-out-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-replay-30-100.png' replay-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0 -0.8 0' material='color: yellow; src: /videos/icons-media/icons8-stop-filled-100.png' reset-on-click="event: anEvent; message: Hello, Metaverse!"></a-entity>
+    </a-entity>
+    
+    <a-entity geometry='primitive: circle; radius: 3' rotation='-90 0 0' position='0 -3 0' material='opacity: 0.1' id='controllsTriggerArea'></a-entity>
+      
+      <!-- Wait for the video to load. -->
+      <a-assets>
+        <!-- Single source video. -->
+        <video id="video" style="display:none" 
+               autoplay loop crossorigin="anonymous" playsinline webkit-playsinline>
+          <!-- MP4 video source. -->
+          <source type="video/mp4"
+               src="../videos/360_VR Master Series _ Free Download _  Pebbly Beach Headland.mp4" />
+        </video>
+      </a-assets>
+    </a-scene>
+    
+    <!-- Show a button to switch to the multi-source example that shows detail. -->
+    <!--<button onClick="window.location.href='multi-source-detail.html'" style="position:absolute;top:10px;right:10px;">-->
+    <!--  Switch to multi-source detail example-->
+    <!--</button>-->
+    <script>
+    const controllsTriggerArea = document.querySelector('#controllsTriggerArea');
+      controllsTriggerArea.addEventListener('mouseenter', function(e) {
+        console.log('I was clicked at: ', e.detail.intersection.point);
+        var controls = document.querySelector('#controlsCenter');
+        controls.setAttribute('position', e.detail.intersection.point);
+        controls.setAttribute('visible', 'true');
+        controls.setAttribute('look-at', '[camera]');
+        document.querySelector('a-scene').removeChild(controllsTriggerArea);
+    });
+    </script>
+  </body>
+</html>

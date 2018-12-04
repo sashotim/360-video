@@ -7,6 +7,7 @@
   <script src="anime-master/anime.min.js"></script>
   <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
   <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
 
   <!-- Use components defined in separate files. -->
   <script src="arrow-key-rotation.js"></script>
@@ -14,11 +15,18 @@
   <script src="toggle-play-on-window-click.js"></script>
   <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
   <script src="hide-once-playing.js"></script>
+  <script src="get-real-position.js"></script>
+  <script src="reset-video-on-click.js"></script>
+  <script src="play-video-on-click.js"></script>
+  <script src="zoom-in-on-click.js"></script>
+  <script src="zoom-out-on-click.js"></script>
+  <script src="replay-on-click.js"></script>
+  <script src="scip-ahead-on-click.js"></script>
 
   <!-- Specify our scene. -->
   <a-scene id='scene'>
     <!-- The original example also has this 180 degree rotation, to appear to be going forward. -->
-    <a-videosphere rotation="0 180 0" src="#video" toggle-play-on-window-click play-on-vrdisplayactivate-or-enter-vr>
+    <a-videosphere rotation="0 180 0" src="#video" toggle-play-on-window-click play-on-vrdisplayactivate-or-enter-vr id="videoSphere">
     </a-videosphere>
 
     <a-entity geometry="primitive: sphere; radius: 0.5" scale="2 1 1" position="7 2.5 2" material="color: gray" id="speechBubble" visible='false' rotation='0 -90 0' animation="property: visible; to: true; startEvents: materialtextureloaded">
@@ -33,11 +41,22 @@
       </a-entity>
     </a-entity>
 
-    <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="40 -6 -26" rotation="0 -60 0" scale="16 9 1" id="plane-for-video"></a-entity>
+    <a-entity geometry="primitive: plane" material="shader: flat; src: #flat-video" position="40 -6 -26" rotation="0 -60 0" scale="16 9 1" id="plane-for-video" ></a-entity>
+    
+    <a-entity geometry='primitive: circle; radius: 0.2' position='0 -3.1 0' id="controlsCenter" rotation='-90 0 0' visible='false'>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-forward-30-100.png' scip-ahead-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0 0.8 0' material='color: yellow; src: /videos/icons-media/icons8-play-filled-100.png' play-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-in.png' zoom-in-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-out.png' zoom-out-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-replay-30-100.png' replay-on-click></a-entity>
+      <a-entity geometry='primitive: circle; radius: 0.3' position='0 -0.8 0' material='color: yellow; src: /videos/icons-media/icons8-stop-filled-100.png' reset-on-click="event: anEvent; message: Hello, Metaverse!"></a-entity>
+    </a-entity>
+    
+    <a-entity geometry='primitive: ring; radiusInner: 5.5; radiusOuter: 6' rotation='-90 0 0' position='0 -3 0' material='opacity: 0.5' id='ring'></a-entity>
 
     <!-- Define camera with zero user height, movement disabled and arrow key rotation added. -->
     <a-entity id='cameraWrapper' rotation="0 -90 0">
-      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation rotation='0 -90 0'>
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation rotation='0 -90 0' id='camera'>
         <!-- Text element for display messaging.  Hide once video is playing. -->
         <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; 
                   width:3;
@@ -45,8 +64,9 @@
                   color:red;
                   value:Click window to make the video play, if needed." hide-once-playing="#video">
         </a-entity>
+        
         <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1" animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1" cursor="fuse: true;"
-          material="color: black; shader: flat" position="0 0 -3" geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09"></a-entity>
+          material="color: black; shader: flat" position="0 0 -3" geometry="primitive: ring; radiusInner: 0.06; radiusOuter: 0.09" id="cursor"></a-entity>
         <a-entity id='countdown' visible='false' position='0 -1.5 -3' text="value: 4; color: white; lineHeight: 80; wrapCount: 5; align: center">
         </a-entity>
       </a-camera>
@@ -74,10 +94,95 @@
     var noIsClicked = false;
     var videoSwitched = false;
     var timeWhenVideo1WasPaused;
+    
+    // var controlsCenter = document.createElement('a-entity');
+    //     document.querySelector('#scene').appendChild(controlsCenter);
+    //     controlsCenter.setAttribute('geometry', 'primitive: circle; radius: 0.2');
+    //     controlsCenter.setAttribute('position', '0 0 0');
+    //     controlsCenter.setAttribute('rotation', '-90 0 0')
+    
+    document.querySelector('#ring').addEventListener('click', function(e) {
+        console.log('I was clicked at: ', e.detail.intersection.point);
+        var controls = document.querySelector('#controlsCenter');
+        controls.setAttribute('position', e.detail.intersection.point);
+        controls.setAttribute('visible', 'true');
+        controls.setAttribute('look-at', '[camera]');
+    });
 
     video.addEventListener('timeupdate', function() {
+      var placementOfOpening = document.querySelector('#camera').getAttribute('rotation');
+      // console.log(placementOfOpening);
+      if(placementOfOpening.x <= -50){
+        // console.log(currentPlacementOfControls);
+        // make an entity object as a child to scene
+        // <a-entity geometry='primitive: circle; radius: 0.2' position='0 0 -3' material='color: yellow' id="controlsCenter">
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-forward-30-100.png'></a-entity>
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='0 0.8 0' material='color: yellow; src: /videos/icons-media/icons8-play-filled-100.png'></a-entity>
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-in.png'></a-entity>
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 -0.4 0' material='color: yellow; src: /videos/icons-media/zoom-out.png'></a-entity>
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 0.4 0' material='color: yellow; src: /videos/icons-media/icons8-replay-30-100.png'></a-entity>
+        //   <a-entity geometry='primitive: circle; radius: 0.3' position='0 -0.8 0' material='color: yellow; src: /videos/icons-media/icons8-stop-filled-100.png'></a-entity>
+        // </a-entity>
+        
+        
+        // controlsCenter.setAttribute('rotation', JSON.stringify(placementOfOpening));
+        
+        // set position(0 0 -3) and rotation(getAttribute) to be the same as the cursurs 
+      }
+      // console.log(document.querySelector('#controlsCenter').getAttribute('position'));
       if (video.currentTime >= 2 && !bubble.getAttribute('visible') && !videoSwitched && !noIsClicked) {
         video.pause();
+        // var bubble = document.createElement("a-entity");
+        // document.querySelector('#scene').appendChild(bubble);
+        // bubble.setAttribute('geometry', "primitive: sphere; radius: 0.5");
+        // bubble.setAttribute('scale', "2 1 1");
+        // bubble.setAttribute('position', "7 2.5 2");
+        // bubble.setAttribute('material', "color: gray");
+        // bubble.setAttribute('id', "speechBubble");
+        // bubble.setAttribute('rotation', "0 -90 0");
+        // bubble.setAttribute('animation', "property: visible; to: true; startEvents: materialtextureloaded");
+        
+        // var question = document.createElement("a-entity");
+        // bubble.appendChild(question);
+        // question.setAttribute("id", "question");
+        // question.setAttribute("visible", "false");
+        // question.setAttribute("position", "0 -0.2 1");
+        // question.setAttribute("geometry", "primitive: plane; width: 0.7; height: auto");
+        // question.setAttribute("material", "color: gray");
+        // question.setAttribute("scale", "2 2 2");
+        // question.setAttribute("text", "value: Do you wish to travel to another location?; color: black; wrapCount: 17; lineHeight: 80");
+        
+        // var answer1 = document.createElement('a-entity');
+        // question.appendChild(answer1);
+        // answer1.setAttribute("id", "answer1");
+        // answer1.setAttribute("position", "-0.2 -0.3 0");
+        // answer1.setAttribute("geometry", "primitive: plane; width: 0.16; height: auto");
+        // answer1.setAttribute("material", "color: lightgreen");
+        // answer1.setAttribute("scale", "2 2 2");
+        // answer1.setAttribute("text", "value: Sure!; color: black; lineHeight: 80; wrapCount: 5; align: center");
+        
+        // var answer2 = document.createElement('a-entity');
+        // question.appendChild(answer2);
+        // answer2.setAttribute("id", "answer2");
+        // answer2.setAttribute("position", "0.2 -0.3 0");
+        // answer2.setAttribute("geometry", "primitive: plane; width: 0.16; height: auto");
+        // answer2.setAttribute("material", "color: lightred");
+        // answer2.setAttribute("scale", "2 2 2");
+        // answer2.setAttribute("text", "value: Nope!; color: black; lineHeight: 80; wrapCount: 5; align: center");
+        
+        // var smallerBubble = document.createElement('a-entity');
+        // bubble.appendChild(smallerBubble);
+        // smallerBubble.setAttribute("geometry", "primitive: sphere; radius: 0.2");
+        // smallerBubble.setAttribute("position", "-0.2 -0.7 0");
+        // smallerBubble.setAttribute("scale", "0.7 1 1");
+        // smallerBubble.setAttribute("material", "color: gray");
+        
+        // var smallestBubble = document.createElement('a-entity');
+        // smallerBubble.appendChild(smallestBubble);
+        // smallestBubble.setAttribute("geometry", "primitive: sphere; radius: 0.08");
+        // smallestBubble.setAttribute("position", "-0.2 -0.4 0");
+        // smallestBubble.setAttribute("scale", "0.5 1 1");
+        // smallestBubble.setAttribute("material", "color: gray");
         bubble.setAttribute('visible', 'true');
 
         bubble.addEventListener("click", function() {

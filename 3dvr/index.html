@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- As if this Glitch were a typical HTML CodePen... -->    
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="aframe-stereo-component-master/dist/aframe-stereo-component.min.js"></script>
+    
+    <a-scene>
+      <a-camera user-height="0" wasd-controls-enabled="false" arrow-key-rotation stereocam="eye:left;">
+        </a-entity>
+      </a-camera>      
+      
+        <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
+            material="shader: flat; src: #image;"
+            scale="-1 1 1" stereo="eye:left; split: vertical">
+        </a-entity>
+    
+        <!-- native sphere, will render on 'right' eye, and will take only the second half (bottom) of the video for projection -->
+        <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
+            material="shader: flat; src: #image;"
+            scale="-1 1 1" stereo="eye:right; split: vertical">
+        </a-entity>
+    
+      <a-assets>
+        <img src="/videos/47150369_1889778254453661_7507566888826699776_n.jpg" id='image'></img>
+      </a-assets>
+    </a-scene>
+  </body>
+</html>

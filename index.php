@@ -1,1 +1,1 @@
-<?php header( 'Location: /switchingScenes/index.html' ) ;  ?> 
+<?php header( 'Location: /3dvr/index.html' ) ;  ?> 
