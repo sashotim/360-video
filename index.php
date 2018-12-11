@@ -1,1 +1,1 @@
-<?php header( 'Location: /3dvr/aframe-stereo-component-master/examples/index.html' ) ;  ?> 
+<?php header( 'Location: /3dvr/three.js/examples/webgl_effects_stereo.html' ) ;  ?> 
