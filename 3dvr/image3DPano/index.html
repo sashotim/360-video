@@ -251,17 +251,17 @@
 				//Left iamge
 				var uvs = geoL.faceVertexUvs[ 0 ];
 
-				for ( var i = 0; i < uvs.length; i ++ ) {
+				// for ( var i = 0; i < uvs.length; i ++ ) {
 
-					for ( var j = 0; j < 3; j ++ ) {
+				// 	for ( var j = 0; j < 3; j ++ ) {
 
-						uvs[ i ][ j ].x *= 0.5;
-						//Uncomment to render Right image
-						//uvs[ i ][ j ].x += 0.5;
+				// 		uvs[ i ][ j ].x *= 0.5;
+				// 		//Uncomment to render Right image
+				// 		//uvs[ i ][ j ].x += 0.5;
 
-					}
+				// 	}
 
-				}
+				// }
 
 				geoR = new THREE.SphereGeometry( 500, 128, 128 );
 				geoR.name = "geoR";
@@ -271,17 +271,17 @@
 				//Left iamge
 				var uvs = geoR.faceVertexUvs[ 0 ];
 
-				for ( var i = 0; i < uvs.length; i ++ ) {
+				// for ( var i = 0; i < uvs.length; i ++ ) {
 
-					for ( var j = 0; j < 3; j ++ ) {
+				// 	for ( var j = 0; j < 3; j ++ ) {
 
-						uvs[ i ][ j ].x *= 0.5;
-						//Uncomment to render Right image
-						uvs[ i ][ j ].x += 0.5;
+				// 		uvs[ i ][ j ].x *= 0.5;
+				// 		//Uncomment to render Right image
+				// 		uvs[ i ][ j ].x += 0.5;
 
-					}
+				// 	}
 
-				}
+				// }
 
 				var materialR = new THREE.MeshBasicMaterial( {
 					map: THREE.ImageUtils.loadTexture( 'textures/R.jpg' )
