@@ -283,15 +283,18 @@
 
 				}
 
-				var material = new THREE.MeshBasicMaterial( {
-					map: THREE.ImageUtils.loadTexture( 'textures/panoLR.jpg' )
+				var materialR = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( 'textures/R.jpg' )
+				} );
+				var materialL = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( 'textures/L.jpg' )
 				} );
 
 				
-				meshL = new THREE.Mesh( geoL, material );
+				meshL = new THREE.Mesh( geoL, materialL );
 				meshL.name = "meshL";
 
-				meshR = new THREE.Mesh( geoR, material );
+				meshR = new THREE.Mesh( geoR, materialR );
 				meshR.name = "meshR";
 
 				scene.add( meshL );
