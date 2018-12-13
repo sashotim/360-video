@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+			<title>Unboring.net - Image 3D Pano</title>
+			<meta charset='utf-8' />
+			<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+			<style>
+				body {
+					background-color: #000000;
+					margin: 0px;
+					overflow: hidden;
+					font-family: Tahoma;
+				}
+
+				#blocker {
+					position: absolute;
+
+					width: 100%;
+					height: 100%;
+
+					background-color: rgba(0,0,0,0.5);
+					z-index: 2;
+				}
+
+				#instructions {
+					width: 100%;
+					height: 100%;
+
+					display: -webkit-box;
+					display: -moz-box;
+					display: box;
+
+					-webkit-box-orient: horizontal;
+					-moz-box-orient: horizontal;
+					box-orient: horizontal;
+
+					-webkit-box-pack: center;
+					-moz-box-pack: center;
+					box-pack: center;
+
+					-webkit-box-align: center;
+					-moz-box-align: center;
+					box-align: center;
+
+					color: #ffffff;
+					text-align: center;
+
+					cursor: pointer;
+				}
+
+				#separator {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0%;
+					left: 0%;
+					display: none;
+				}
+
+				.line{
+					height: 100%;
+					position: absolute;
+					border: 1px solid #333333;
+					left: 50%;
+				}
+
+			</style>
+	</head>
+	<body>
+		<div id='blocker'>
+
+			<div id='instructions'>
+				<span style='font-size:40px'>Click to play</span>
+			</div>
+
+		</div>
+		<div id='container'></div>
+		<div id='separator'>
+			<div class='line'></div>
+		</div>
+
+		<script src = 'js/three.min.js'							></script>
+		<script src='js/Detector.js'							></script>
+		<script src='js/Browser.js'								></script>
+
+		<script src='js/controls/MouseLockControls.js'			></script>
+		<script src='js/controls/DeviceOrientationControls.js'	></script>
+		<script src='js/controls/VRControls.js'					></script>
+		
+		<script src='js/effects/StereoEffect.js'				></script>
+		<script src='js/effects/VREffect.js'					></script>
+
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container, meshL, meshR;
+			var camera, controls, scene;
+			var renderer, stereoEffect, vrEffect;
+
+			var geoL, geoR;
+		
+			var clock = new THREE.Clock();
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+			var separator = document.getElementById( 'separator' );
+
+			var device = 'computer';
+
+			if(Browser.isIPHONE()){
+				device = 'iPhone';
+			}else if(Browser.isIPAD()){
+				device = 'iPad';
+			}else if(Browser.isAndroid()){
+				separator.style.display = 'block';
+				device = 'android';
+			}else if(Browser.VRready()){
+				device = 'computerVR';
+			}
+
+			//console.log(device);
+
+			if( device === 'computer'){
+				var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+				if ( havePointerLock ) {
+
+					var element = document.body;
+
+					var pointerlockchange = function ( event ) {
+
+						if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+
+							controlsEnabled = true;
+							controls.enabled = true;
+
+							blocker.style.display = 'none';
+
+						} else {
+
+							controls.enabled = false;
+
+							blocker.style.display = '-webkit-box';
+							blocker.style.display = '-moz-box';
+							blocker.style.display = 'box';
+
+							instructions.style.display = '';
+
+						}
+
+					}
+
+					var pointerlockerror = function ( event ) {
+
+						instructions.style.display = '';
+
+					}
+
+					// Hook pointer lock state change events
+					document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+					document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+					document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+
+					document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+					document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+					document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+					instructions.addEventListener( 'click', function ( event ) {
+					instructions.style.display = 'none';
+
+						// Ask the browser to lock the pointer
+						element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+						if ( /Firefox/i.test( navigator.userAgent ) ) {
+
+							var fullscreenchange = function ( event ) {
+
+								if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+
+									document.removeEventListener( 'fullscreenchange', fullscreenchange );
+									document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+
+									element.requestPointerLock();
+								}
+
+							}
+
+							document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+							document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+
+							element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+							element.requestFullscreen();
+
+						} else {
+
+							element.requestPointerLock();
+
+						}
+
+					}, false );
+
+				} else {
+
+					instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+				
+				}
+
+			}
+			else if( device === 'iPhone' || device === 'iPad' ){
+				//instructions.style.display = 'none';
+				instructions.addEventListener( 'click', function ( event ) {
+					instructions.style.display = 'none';
+					blocker.style.display = 'none';
+					video.play();
+				}, false );
+			}
+			else if( device === 'android' ){
+				instructions.addEventListener( 'click', function ( event ) {
+					fullscreenAndroid();
+					instructions.style.display = 'none';
+					blocker.style.display = 'none';
+					video.play();
+				}, false );
+			}
+			else if( device === 'computerVR' ){
+				instructions.addEventListener( 'click', function ( event ) {
+					fullscreenVR();
+					instructions.style.display = 'none';
+					blocker.style.display = 'none';
+					video.play();
+				}, false );
+			}
+
+			init();
+
+			var controlsEnabled = false;
+
+			function init(){
+				container = document.getElementById( 'container' );
+
+				camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 1, 10000 );
+
+				scene = new THREE.Scene();
+
+				geoL = new THREE.SphereGeometry( 500, 128, 128 );
+				geoL.name = "geoL";
+				geoL.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
+
+				
+				//Left iamge
+				var uvs = geoL.faceVertexUvs[ 0 ];
+
+				for ( var i = 0; i < uvs.length; i ++ ) {
+
+					for ( var j = 0; j < 3; j ++ ) {
+
+						uvs[ i ][ j ].x *= 0.5;
+						//Uncomment to render Right image
+						//uvs[ i ][ j ].x += 0.5;
+
+					}
+
+				}
+
+				geoR = new THREE.SphereGeometry( 500, 128, 128 );
+				geoR.name = "geoR";
+				geoR.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
+
+				
+				//Left iamge
+				var uvs = geoR.faceVertexUvs[ 0 ];
+
+				for ( var i = 0; i < uvs.length; i ++ ) {
+
+					for ( var j = 0; j < 3; j ++ ) {
+
+						uvs[ i ][ j ].x *= 0.5;
+						//Uncomment to render Right image
+						uvs[ i ][ j ].x += 0.5;
+
+					}
+
+				}
+
+				var material = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( 'textures/panoLR.jpg' )
+				} );
+
+				
+				meshL = new THREE.Mesh( geoL, material );
+				meshL.name = "meshL";
+
+				meshR = new THREE.Mesh( geoR, material );
+				meshR.name = "meshR";
+
+				scene.add( meshL );
+				scene.add( meshR );
+				
+				if( device === 'computer'){
+					controls = new THREE.MouseLockControls( camera );
+					//scene.add( controls.getObject() );
+				} 
+				else if( device === 'computerVR'){
+					controls = new THREE.VRControls( camera );
+				}
+				else{
+					controls = new THREE.DeviceOrientationControls( camera );
+				}
+
+				renderer = new THREE.WebGLRenderer( );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.innerHTML = '';
+				container.appendChild( renderer.domElement );
+
+				if(device === 'android'){
+					stereoEffect = new THREE.StereoEffect(renderer);
+					stereoEffect.setSize(window.innerWidth, window.innerHeight);
+				}else if(device === 'computerVR'){
+					vrEffect = new THREE.VREffect(renderer);
+				}
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				animate();
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				if(device === 'android'){
+					stereoEffect.setSize(window.innerWidth, window.innerHeight);
+				}else if(device === 'computerVR'){
+					vrEffect.setSize( window.innerWidth, window.innerHeight );
+				}else{
+					renderer.setSize( window.innerWidth, window.innerHeight );
+				}				
+
+			}
+
+			function fullscreenAndroid() {
+				//TODO > Improve a better control activate/deactivate http://www.sitepoint.com/introducing-screen-orientation-api/
+				var container = document.documentElement;
+
+				if (container.requestFullscreen) {
+					container.requestFullscreen();
+				} else if (container.msRequestFullscreen) { 
+					container.msRequestFullscreen();
+				} else if (container.mozRequestFullScreen) {
+					container.mozRequestFullScreen();
+				} else if (container.webkitRequestFullscreen) {
+					container.webkitRequestFullscreen();
+				}
+
+				if ('orientation' in screen) {
+					// API supported, yeah!
+					screen.orientation.lock('landscape');               
+				} else {
+					// API not supported :(
+				}
+
+				document.addEventListener('webkitfullscreenchange mozfullscreenchange fullscreenchange msfullscreenchange',function(){
+					var fullStatus = false;
+					if (container.requestFullscreen) {
+						fullStatus = document.fullscreen;
+					} else if (container.msRequestFullscreen) { 
+						fullStatus = document.msFullscreenElement;
+					} else if (container.mozRequestFullScreen) {
+						fullStatus = document.mozFullScreen;
+					} else if (container.webkitRequestFullscreen) {
+						fullStatus = document.webkitIsFullScreen;
+					}
+
+				});
+			}
+
+			function fullscreenVR (){
+				vrEffect.setFullScreen( true );
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				render();
+
+			}
+
+			function render() {
+
+				var delta = clock.getDelta(),
+					time = clock.getElapsedTime() * 5;
+
+				controls.update ( delta );
+
+				// render
+				if(device === 'android'){
+					stereoEffect.render ( scene, camera );
+				}else if(device === 'computerVR'){
+					vrEffect.render ( scene, camera );
+				}else{
+					renderer.render ( scene, camera );
+				}
+
+			}
+
+		</script>
+
+	</body>
+</html>
