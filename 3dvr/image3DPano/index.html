@@ -300,6 +300,20 @@
 				scene.add( meshL );
 				scene.add( meshR );
 				
+				var geometry = new THREE.PlaneGeometry( 32, 18, 2 );
+				var materialL = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( 'textures/3d_test_R.png' )
+				});
+				var materialL = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( 'textures/3d_test_R.png' )
+				});
+				var planeL = new THREE.Mesh( geometry, materialL );
+				var planeR = new THREE.Mesh( geometry, materialR );
+				scene.add( planeL );
+				scene.add( planeR );
+				planeL.position.set(0, 0, 25);
+				planeR.position.set(0, 0, 25);
+				
 				if( device === 'computer'){
 					controls = new THREE.MouseLockControls( camera );
 					//scene.add( controls.getObject() );
