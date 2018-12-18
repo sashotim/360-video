@@ -1,1 +1,1 @@
-<?php header( 'Location: /3dvr/image3DPano/index.html' ) ;  ?> 
+<?php header( 'Location: /3dvr/three.js/examples/webvr_video.html' ) ;  ?> 
