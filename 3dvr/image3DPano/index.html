@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
 	<head>
-			<title>Unboring.net - Image 3D Pano</title>
+			<title>3D vr test</title>
 			<meta charset='utf-8' />
 			<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 			<style>
@@ -304,15 +304,16 @@
 				var materialL = new THREE.MeshBasicMaterial( {
 					map: THREE.ImageUtils.loadTexture( 'textures/3d_test_R.png' )
 				});
-				var materialL = new THREE.MeshBasicMaterial( {
-					map: THREE.ImageUtils.loadTexture( 'textures/3d_test_R.png' )
+				var materialL = new THREE.MeshBasicMaterial({
+					// color: 0xffff00, side: THREE.DoubleSide
+					map: THREE.ImageUtils.loadTexture( 'textures/3d_test_L.png' )
 				});
 				var planeL = new THREE.Mesh( geometry, materialL );
-				var planeR = new THREE.Mesh( geometry, materialR );
+				// var planeR = new THREE.Mesh( geometry, materialR );
 				scene.add( planeL );
-				scene.add( planeR );
+				// scene.add( planeR );
 				planeL.position.set(0, 0, 25);
-				planeR.position.set(0, 0, 25);
+				// planeR.position.set(0, 0, 25);
 				
 				if( device === 'computer'){
 					controls = new THREE.MouseLockControls( camera );
