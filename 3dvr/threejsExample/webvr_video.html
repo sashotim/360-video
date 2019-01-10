@@ -8,6 +8,7 @@
 		<meta http-equiv="origin-trial" data-feature="WebXR Device API (For Chrome M69+)" data-expires="2019-01-07" content="ArPzyYNrUDiXsGOh647Ya7MtVUA1nM+WFMnPWu7eoF2nQHOP6mTATIbiv0w+k2kFaPofZG/04ZEQdsACq4IA0wQAAABTeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkRldmljZU02OSIsImV4cGlyeSI6MTU0Njg4MzAxOH0=">
 		<!-- Origin Trial Token, feature = WebXR Gamepad Support, origin = https://threejs.org, expires = 2019-01-07 -->
 		<meta http-equiv="origin-trial" data-feature="WebXR Gamepad Support" data-expires="2019-01-07" content="Av16a8LVXasKVQV9j3u0OlXdTfz5O9qDqhROyL5Up6R3sdOPbtFuc6n6o5DHitwnb5VdirH0GyvROwvz8xxd0AkAAABYeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkdhbWVwYWRTdXBwb3J0IiwiZXhwaXJ5IjoxNTQ2ODgzMDE4fQ==">
+		<script src="https://fastcdn.org/three.js/73/three.min.js"></script>
 		<style>
 			body {
 				font-family: Monospace;
@@ -34,9 +35,9 @@
 			stereoscopic panoramic render by <a href="http://pedrofe.com/rendering-for-oculus-rift-with-arnold/" target="_blank" rel="noopener">pedrofe</a>. scene from <a href="http://www.meryproject.com/" target="_blank" rel="noopener">mery project</a>.
 		</div>
 
-		<script src="build/three.js"></script>
+		<script src="/3dvr/threejsExample/build/three.js"></script>
 
-		<script src="examples/js/vr/WebVR.js"></script>
+		<script src="js/vr/WebVR.js"></script>
 
 		<script>
 
@@ -64,8 +65,7 @@
 				video.crossOrigin = 'anonymous';
 				video.loop = true;
 				video.muted = true;
-				// video.src = 'textures/MaryOculus.webm';
-				video.src = '/videos/Ayutthaya - Easy Tripod Paint _ 360_VR Master Series _ Free Download.mp4';
+				video.src = 'textures/MaryOculus.webm';
 				video.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
 				video.play();
 
@@ -101,16 +101,6 @@
 					uvs[ i ] *= 0.5;
 
 				}
-				
-				var geometryFlat = new THREE.PlaneGeometry( 32, 18, 2 );
-				var materialL = new THREE.MeshBasicMaterial( {
-					// color: 0xffff00, side: THREE.DoubleSide
-					map: THREE.ImageUtils.loadTexture( '/videos/3d_test_L.png' )
-				});
-				
-				var planeL = new THREE.Mesh( geometryFlat, materialL );
-				scene.add( planeL );
-				planeL.position.set(0, 0, 25);
 
 				var material = new THREE.MeshBasicMaterial( { map: texture } );
 
@@ -132,15 +122,6 @@
 					uvs[ i ] += 0.5;
 
 				}
-				
-				var geometryFlat = new THREE.PlaneGeometry( 32, 18, 2 );
-				var materialR = new THREE.MeshBasicMaterial({
-					// color: 0xffff00, side: THREE.DoubleSide
-					map: THREE.ImageUtils.loadTexture( '/videos/3d_test_R.png' )
-				});
-				var planeR = new THREE.Mesh( geometryFlat, materialR );
-				scene.add( planeR );
-				planeR.position.set(0, 0, 25);
 
 				var material = new THREE.MeshBasicMaterial( { map: texture } );
 
