@@ -130,7 +130,7 @@ var WEBVR = {
 			element.style.zIndex = '999';
 
 		}
-
+		console.log('xr' in navigator);
 		if ( 'xr' in navigator ) {
 
 			var button = document.createElement( 'button' );
