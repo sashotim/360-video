@@ -109,6 +109,14 @@
 				mesh.rotation.y = - Math.PI / 2;
 				mesh.layers.set( 1 ); // display in left eye only
 				scene.add( mesh );
+				
+				var geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+				
+				var material = new THREE.MeshBasicMaterial({ color: '#3d8750' });
+				
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.layers.set(1);
+				scene.add(mesh);
 
 				// right
 
