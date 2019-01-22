@@ -97,11 +97,11 @@
 
 				var uvs = geometry.attributes.uv.array;
 
-				for ( var i = 0; i < uvs.length; i += 2 ) {
+				// for ( var i = 0; i < uvs.length; i += 2 ) {
 
-					uvs[ i ] *= 0.5;
+				// 	uvs[ i ] *= 0.5;
 
-				}
+				// }
 
 				var material = new THREE.MeshBasicMaterial( { map: texture } );
 
@@ -116,13 +116,17 @@
 				geometry.scale( - 1, 1, 1 );
 
 				var uvs = geometry.attributes.uv.array;
-
+				
+				console.log(uvs);
+				
 				for ( var i = 0; i < uvs.length; i += 2 ) {
 
 					uvs[ i ] *= 0.5;
 					uvs[ i ] += 0.5;
 
 				}
+				
+				console.log(uvs);
 
 				var material = new THREE.MeshBasicMaterial( { map: texture } );
 
