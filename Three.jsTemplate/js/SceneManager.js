@@ -81,7 +81,6 @@ function SceneManager(canvas) {
     function onDocumentMouseMove(event) {
 
         var mouse = new THREE.Vector2();
-        console.log(mouse);
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -92,7 +91,7 @@ function SceneManager(canvas) {
 
         if (intersects.length > 2) {
             canvas.parentNode.style.cursor = "pointer";
-            for (var i = 1; i < intersects.length - 2; i++) {
+            for (var i = 0; i < intersects.length - 3; i++) {
 
 				intersects[i].object.material.color.set(0xff0000);
 
@@ -100,7 +99,11 @@ function SceneManager(canvas) {
         }
         else {
             canvas.parentNode.style.cursor = "default";
-            
+            for (var i = 0; i < scene.children.length - 3; i++) {
+
+				scene.children[i].material.color.set('white');
+
+			}
         }
 
     }
