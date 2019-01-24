@@ -5,3 +5,22 @@ html, body {
     overflow: hidden;
     margin: 0;
 }
+
+	body {
+			font-family: Monospace;
+			background-color: #f0f0f0;
+			margin: 0px;
+			overflow: hidden;
+		}
+
+		#info {
+			position: absolute;
+			top: 10px;
+			width: 100%;
+			color: #fff;
+			text-align: center;
+		}
+
+		a {
+			color: #ff0
+		}

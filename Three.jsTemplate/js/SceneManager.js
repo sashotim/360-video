@@ -14,7 +14,7 @@ function SceneManager(canvas) {
 
     function buildScene() {
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color("#000");
+        scene.background = new THREE.Color(0x101010);
 
         return scene;
     }
@@ -24,6 +24,10 @@ function SceneManager(canvas) {
         const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
         renderer.setPixelRatio(DPR);
         renderer.setSize(width, height);
+        
+        // canvas.appendChild(renderer.domElement);
+        
+        canvas.parentNode.appendChild(WEBVR.createButton(renderer, { frameOfReferenceType: 'head-model' }));
 
         renderer.gammaInput = true;
         renderer.gammaOutput = true; 
@@ -33,10 +37,11 @@ function SceneManager(canvas) {
 
     function buildCamera({ width, height }) {
         const aspectRatio = width / height;
-        const fieldOfView = 60;
+        const fieldOfView = 75;
         const nearPlane = 1;
-        const farPlane = 100; 
+        const farPlane = 2000; 
         const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
+        camera.layers.enable(1);
 
         return camera;
     }
