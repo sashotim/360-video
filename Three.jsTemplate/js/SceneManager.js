@@ -92,9 +92,15 @@ function SceneManager(canvas) {
 
         if (intersects.length > 2) {
             canvas.parentNode.style.cursor = "pointer";
+            for (var i = 1; i < intersects.length - 2; i++) {
+
+				intersects[i].object.material.color.set(0xff0000);
+
+			}
         }
         else {
             canvas.parentNode.style.cursor = "default";
+            
         }
 
     }
