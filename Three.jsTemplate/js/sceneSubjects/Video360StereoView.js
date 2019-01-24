@@ -51,14 +51,7 @@ function SceneSubject(scene) {
 	mesh.layers.set(1); // display in left eye only
 	scene.add(mesh);
 
-	var geometry = new THREE.PlaneBufferGeometry(1.6, 0.9, 1);
 
-	var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('/videos/3d_test_L.png') });
-
-	var mesh = new THREE.Mesh(geometry, material);
-	mesh.layers.set(1);
-	scene.add(mesh);
-	mesh.position.set(0, -1, -3);
 
 	// right
 
@@ -83,15 +76,7 @@ function SceneSubject(scene) {
 	mesh.layers.set(2); // display in right eye only
 	scene.add(mesh);
 
-	var geometry = new THREE.PlaneBufferGeometry(1.6, 0.9, 1);
-
-	var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('/videos/3d_test_R.png') });
-
-	var mesh = new THREE.Mesh(geometry, material);
-	mesh.layers.set(2);
-	scene.add(mesh);
-	mesh.position.set(0, -1, -3);
-
+	
 	this.update = function(time) {
 		// const scale = Math.sin(time)+2;
 
