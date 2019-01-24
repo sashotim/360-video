@@ -1,4 +1,4 @@
-function GeneralLights(scene) {
+function Flat3DImage(scene) {
 
 	// const light = new THREE.PointLight("#2222ff", 1);
 	//   scene.add(light);

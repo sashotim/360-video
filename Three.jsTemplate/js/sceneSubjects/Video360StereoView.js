@@ -1,4 +1,4 @@
-function SceneSubject(scene) {
+function Video360StereoView(scene) {
 
 	// const radius = 2;
 	// const mesh = new THREE.Mesh(new THREE.IcosahedronBufferGeometry(radius, 2), new THREE.MeshStandardMaterial({ flatShading: true }));

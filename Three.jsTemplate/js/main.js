@@ -20,6 +20,8 @@ function resizeCanvas() {
     sceneManager.onWindowResize();
 }
 
+
+
 function render() {
     requestAnimationFrame(render);
     sceneManager.update();
