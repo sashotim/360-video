@@ -63,6 +63,11 @@
 
 			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
 			camera.layers.enable(1); // render left view when no stereo available
+			
+			var cameraMoveEvent = new Event('cameraMove');
+			document.addEventListener('build', function (e) { scene.children.material.color.set('green')}, false);
+			document.dispatchEvent(cameraMoveEvent);
+
 
 			// video
 
@@ -213,9 +218,9 @@
 
 		function onDocumentMouseMove(event) {
 
-			var p = document.createElement("p");
-			p.innerHTML('triggered')
-			window.appendChild(p)
+			// var p = document.createElement("p");
+			// p.innerHTML('triggered')
+			// window.appendChild(p)
 			var mouse = new THREE.Vector2();
 			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
