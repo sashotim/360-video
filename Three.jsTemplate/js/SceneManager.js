@@ -86,7 +86,6 @@ function SceneManager(canvas) {
 
         var raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(mouse, camera);
-        console.log(scene.children)
         var intersects = raycaster.intersectObjects(scene.children);
 
         if (intersects.length > 2) {
