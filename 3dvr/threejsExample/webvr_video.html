@@ -50,7 +50,7 @@
 		init();
 		animate();
 
-		document.addEventListener('mousemove', onDocumentMouseMove, false);
+		document.addEventListener('pointerlockchange', onDocumentMouseMove, false);
 
 		function init() {
 
@@ -214,11 +214,9 @@
 		function onDocumentMouseMove(event) {
 
 			var mouse = new THREE.Vector2();
-			// mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			// mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 			
-			mouse.x = camera.position.x;
-			mouse.y = camera.position.y;
 			
 			var raycaster = new THREE.Raycaster();
 			raycaster.setFromCamera(mouse, camera);
