@@ -41,6 +41,7 @@
 	<script src="/3dvr/build/three.js"></script>
 
 	<script src="js/vr/WebVR.js"></script>
+	
 
 	<script>
 		var camera, scene, renderer;
@@ -195,7 +196,10 @@
 		}
 
 		function animate() {
-
+			var mouse = new THREE.Vector2();
+			
+			console.log(mouse)
+			console.log(camera)
 			renderer.setAnimationLoop(render);
 
 		}
@@ -210,9 +214,12 @@
 		function onDocumentMouseMove(event) {
 
 			var mouse = new THREE.Vector2();
-			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
+			// mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			// mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			
+			mouse.x = camera.position.x;
+			mouse.y = camera.position.y;
+			
 			var raycaster = new THREE.Raycaster();
 			raycaster.setFromCamera(mouse, camera);
 			var intersects = raycaster.intersectObjects(scene.children);
