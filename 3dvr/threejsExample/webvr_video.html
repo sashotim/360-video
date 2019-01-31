@@ -33,10 +33,10 @@
 
 <body>
 	<div id="container"></div>
-	<div id="info">
-		<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webvr - 360 stereo video<br /> stereoscopic panoramic render by <a href="http://pedrofe.com/rendering-for-oculus-rift-with-arnold/" target="_blank" rel="noopener">pedrofe</a>.
-		scene from <a href="http://www.meryproject.com/" target="_blank" rel="noopener">mery project</a>.
-	</div>
+	<!--<div id="info">-->
+	<!--	<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webvr - 360 stereo video<br /> stereoscopic panoramic render by <a href="http://pedrofe.com/rendering-for-oculus-rift-with-arnold/" target="_blank" rel="noopener">pedrofe</a>.-->
+	<!--	scene from <a href="http://www.meryproject.com/" target="_blank" rel="noopener">mery project</a>.-->
+	<!--</div>-->
 
 	<script src="/3dvr/build/three.js"></script>
 
@@ -46,11 +46,10 @@
 		var camera, scene, renderer;
 		var video, texture;
 
-		var raycaster = new THREE.Raycaster();
-		var mouse = new THREE.Vector2();
-
 		init();
 		animate();
+
+		document.addEventListener('mousemove', onDocumentMouseMove, false);
 
 		function init() {
 
@@ -92,9 +91,18 @@
 
 			}, 1000 / 24);
 
+			var raycaster = new THREE.Raycaster();
+			var mouse = new THREE.Vector2();
 
+			function onMouseMove(event) {
 
-			
+				// calculate mouse position in normalized device coordinates
+				// (-1 to +1) for both components
+
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+			}
 
 			scene = new THREE.Scene();
 			scene.background = new THREE.Color(0x101010);
@@ -176,16 +184,6 @@
 			window.addEventListener('resize', onWindowResize, false);
 
 		}
-		
-		function onMouseMove(event) {
-
-				// calculate mouse position in normalized device coordinates
-				// (-1 to +1) for both components
-
-				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-			}
 
 		function onWindowResize() {
 
@@ -204,25 +202,40 @@
 
 		function render() {
 
-			// update the picking ray with the camera and mouse position
-			raycaster.setFromCamera(mouse, camera);
-
-			// calculate objects intersecting the picking ray
-			var intersects = raycaster.intersectObjects(scene.children);
-
-			for (var i = 0; i < intersects.length; i++) {
-
-				console.log(intersects[i]);
-
-			}
-
 
 			renderer.render(scene, camera);
 
 		}
-		window.addEventListener('mousemove', onMouseMove, false);
 
-		window.requestAnimationFrame(render);
+		function onDocumentMouseMove(event) {
+
+			var mouse = new THREE.Vector2();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+			var raycaster = new THREE.Raycaster();
+			raycaster.setFromCamera(mouse, camera);
+			var intersects = raycaster.intersectObjects(scene.children);
+
+
+			if (intersects.length > 2) {
+				container.parentNode.style.cursor = "pointer";
+				for (var i = 0; i < intersects.length - 3; i++) {
+
+					intersects[i].object.material.color.set(0xff0000);
+
+				}
+			}
+			else {
+				container.parentNode.style.cursor = "default";
+				for (var i = 0; i < scene.children.length; i++) {
+					if (i === 1 || i === 3) {
+						scene.children[i].material.color.set('white');
+					}
+				}
+			}
+
+		}
 	</script>
 </body>
 
