@@ -1,1 +1,1 @@
-<?php header( 'Location: /3dvr/threejsExample/webvr_video.html' ) ;  ?> 
+<?php header( 'Location: /switchingScenes/index.html' ) ;  ?> 
